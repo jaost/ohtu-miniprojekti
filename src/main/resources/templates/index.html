@@ -2,14 +2,21 @@
 
 <html>
 
-  <head>
-    <title>Index</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  </head>
+<head>
+  <title>Index</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
 
-  <body>
-      <!-- lomake tipseille -->
-      <p>${test1}</p>
-  </body>
+<body>
+  <!-- lomake tipseille -->
+  <p>${test1}</p>
+  <h2>Add a new tip</h2>
+  <form action="/" method="POST">
+    <p> Author: <input name="author"></input></p>
+    <p> Title: <input name="title"></input></p>
+    <p> URL: <input name="url"></input></p>
+    <input type="submit" value="Add"></input>
+  </form>
+</body>
 
 </html>

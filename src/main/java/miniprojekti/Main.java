@@ -12,6 +12,7 @@ import spark.Response;
 import spark.Route;
 import spark.Spark;
 import static spark.Spark.get;
+import static spark.Spark.post;
 import spark.template.velocity.VelocityTemplateEngine;
 
 // Main tulee toimimaan Controllerina
@@ -44,5 +45,14 @@ public class Main {
             ModelAndView mod = new ModelAndView(map, "templates/index.html");
             return mod;
         }, new VelocityTemplateEngine());
+
+        // Uuden lisäys
+        post("/", (req, res) -> {
+            //ReadingTip tip = new ReadingTip(req.queryParams("author"), req.queryParams("title"), req.queryParams("url"));
+            readingtipdao.save(req.queryParams("author"), req.queryParams("title"), req.queryParams("url"));
+            res.status(201);
+            res.redirect("/");
+            return "New tip added succesfully";
+        });
     }
 }
