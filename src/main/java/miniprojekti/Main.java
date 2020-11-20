@@ -1,16 +1,27 @@
 package miniprojekti;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import miniprojekti.data_access.ReadingTipDao;
+import miniprojekti.database.Database;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Spark;
+import static spark.Spark.get;
+import spark.template.velocity.VelocityTemplateEngine;
 
 // Main tulee toimimaan Controllerina
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Test");
+        System.out.println("Test");  
+        
+        Database database = new Database("jdbc:sqlite:readingtips.db");
+        ReadingTipDao readingtipdao = new ReadingTipDao(database);
+        
         
         ProcessBuilder process = new ProcessBuilder();
         Integer port;
@@ -24,5 +35,15 @@ public class Main {
         Spark.port(port);
         
         Spark.get("/helloworld", (req, res) -> "Hello World");
+        
+        // Etusivu
+        get("/", (req, res) -> {
+            
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("test1", "test2");
+            
+            ModelAndView mod = new ModelAndView(map, "templates/index.html");
+            return mod;
+        }, new VelocityTemplateEngine());
     }
 }
