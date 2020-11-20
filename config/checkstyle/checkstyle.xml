@@ -4,6 +4,8 @@
 
     <property name="localeCountry" value="EN"/>
     <property name="localeLanguage" value="en"/>
+    
+    <module name="SuppressWarningsFilter"/>
 
     <module name='TreeWalker'>
 
@@ -36,6 +38,8 @@
         <module name="MethodName">
             <property name="format" value="^[a-z](_?[a-zA-Z0-9]+)*$"/>
         </module>
+        
+        <module name="SuppressWarningsHolder"/>
 
     </module>
 
