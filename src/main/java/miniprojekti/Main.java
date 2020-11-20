@@ -22,7 +22,6 @@ public class Main {
         Database database = new Database("jdbc:sqlite:readingtips.db");
         ReadingTipDao readingtipdao = new ReadingTipDao(database);
         
-        
         ProcessBuilder process = new ProcessBuilder();
         Integer port;
         
