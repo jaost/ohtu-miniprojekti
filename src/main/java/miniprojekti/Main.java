@@ -7,6 +7,7 @@ import java.util.List;
 import miniprojekti.data_access.ReadingTipDao;
 import miniprojekti.database.Database;
 import spark.ModelAndView;
+import spark.Redirect;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -17,6 +18,7 @@ import spark.template.velocity.VelocityTemplateEngine;
 
 // Main tulee toimimaan Controllerina
 public class Main {
+    @SuppressWarnings("MethodLength")
     public static void main(String[] args) {
         System.out.println("Test");  
         
@@ -37,22 +39,21 @@ public class Main {
         Spark.get("/helloworld", (req, res) -> "Hello World");
         
         // Etusivu
-        get("/", (req, res) -> {
+        get("/", (req, res) -> {  
+            HashMap<String, String> model = new HashMap<>();
             
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("test1", "test2");
-            
-            ModelAndView mod = new ModelAndView(map, "templates/index.html");
-            return mod;
+            return new ModelAndView(model, "templates/index.html");
         }, new VelocityTemplateEngine());
 
         // Uuden lisäys
         post("/", (req, res) -> {
+            HashMap<String, String> model = new HashMap<>();
             //ReadingTip tip = new ReadingTip(req.queryParams("author"), req.queryParams("title"), req.queryParams("url"));
             readingtipdao.save(req.queryParams("author"), req.queryParams("title"), req.queryParams("url"));
-            res.status(201);
-            res.redirect("/");
-            return "New tip added succesfully";
-        });
+
+            model.put("tipAdded", "New tip added succesfully");
+            
+            return new ModelAndView(model, "templates/index.html");
+        }, new VelocityTemplateEngine());
     }
 }

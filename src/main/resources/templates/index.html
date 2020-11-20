@@ -9,7 +9,9 @@
 
 <body>
   <!-- lomake tipseille -->
-  <p>${test1}</p>
+  #if ($tipAdded)
+    <Strong>Tip added succesfully</Strong>
+  #end
   <h2>Add a new tip</h2>
   <form action="/" method="POST">
     <p> Author: <input name="author"></input></p>
