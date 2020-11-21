@@ -47,7 +47,7 @@ public class ReadingTipDao {
             stmt.setString(3, url);
             stmt.executeUpdate();
         } catch (Exception e) {
-            
+            System.out.println(e);
         }
     }
 }
