@@ -15,7 +15,7 @@ public class Database {
         try (Connection connection = this.getConnection()) {
             Statement s = connection.createStatement();
             s.execute("CREATE TABLE IF NOT EXISTS readingtip " +
-                    "(id INTEGER PRIMARY KEY, " +
+                    "(id SERIAL PRIMARY KEY, " +
                     "author VARCHAR(255), " +
                     "title VARCHAR(255), " +
                     "url VARCHAR(255))");
