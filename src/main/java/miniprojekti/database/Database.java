@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.net.URI; 
 import java.net.URISyntaxException;
+import java.sql.Statement;
 
 public class Database {
     
@@ -11,6 +12,16 @@ public class Database {
     
     public Database(String databaseAddress) {
         this.databaseAddress = databaseAddress;
+        try (Connection connection = this.getConnection()) {
+            Statement s = connection.createStatement();
+            s.execute("CREATE TABLE IF NOT EXISTS readingtip " +
+                    "(id INTEGER PRIMARY KEY, " +
+                    "author VARCHAR(255), " +
+                    "title VARCHAR(255), " +
+                    "url VARCHAR(255))");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     
     public Connection getConnection() throws Exception {
