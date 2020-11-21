@@ -18,6 +18,7 @@ public class Database {
         // If we are in Heroku, use the environment variable for database URI
         // Otherwise use the set local address
         if (System.getenv("DATABASE_URL") != null) {
+            Class.forName("org.postgresql.Driver");
             // Parse URI for credentials
             URI dbUri = new URI(System.getenv("DATABASE_URL"));
             String username = dbUri.getUserInfo().split(":")[0];
