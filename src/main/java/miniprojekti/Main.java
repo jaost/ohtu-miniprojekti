@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import miniprojekti.data_access.ReadingTipDao;
 import miniprojekti.database.Database;
+import miniprojekti.domain.ReadingTip;
 import spark.ModelAndView;
 import spark.Redirect;
 import spark.Request;
@@ -54,6 +55,27 @@ public class Main {
             model.put("tipAdded", "New tip added succesfully");
             
             return new ModelAndView(model, "templates/index.html");
+        }, new VelocityTemplateEngine());
+        
+        // Tipsien nayttaminen, aluksi kaikki
+        get("/tips", (req, res) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            
+            List<ReadingTip> tips = readingtipdao.findAll();
+            ArrayList<HashMap<String, String>> modelTips = new ArrayList<>();
+            
+            for (ReadingTip tip : tips) {
+                HashMap<String, String> tipMap = new HashMap<>();
+                
+                tipMap.put("author", tip.getAuthor());
+                tipMap.put("title", tip.getTitle());
+                tipMap.put("url", tip.getUrl());
+                
+                modelTips.add(tipMap);
+            }
+            
+            model.put("tips", modelTips);
+            return new ModelAndView(model, "templates/tips.html");
         }, new VelocityTemplateEngine());
     }
 }
