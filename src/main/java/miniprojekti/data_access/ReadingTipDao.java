@@ -17,7 +17,7 @@ public class ReadingTipDao {
         this.database = database;
     }
     
-    public List<ReadingTip> findAll() throws SQLException {
+    public List<ReadingTip> findAll() {
         List<ReadingTip> readingTips = new ArrayList<>();
         
         try (Connection conn = database.getConnection();
@@ -38,7 +38,7 @@ public class ReadingTipDao {
         return readingTips;
     }
     
-    public void save(String author, String title, String url) throws SQLException {
+    public void save(String author, String title, String url) {
         try (Connection conn = database.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO readingtip (author, title, url) "
                     + "VALUES (?, ?, ?)");
