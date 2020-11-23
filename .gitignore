@@ -5,5 +5,7 @@ build
 .classpath
 .history/
 .project
+.settings/
 /bin
 /.nb-gradle/
+ReadingTips.db
