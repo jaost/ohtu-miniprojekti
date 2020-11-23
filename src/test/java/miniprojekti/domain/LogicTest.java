@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import miniprojekti.data_access.Dao;
 import miniprojekti.data_access.ReadingTipDao;
-import miniprojekti.domain.Logic;
 import org.junit.*;
 import static org.mockito.Mockito.*;
 
@@ -12,7 +11,7 @@ public class LogicTest {
     ReadingTipDao testDao;
     
     
-    // Esimerkki stubi testausta varten -> Minna ei käytä tätä, TatuC käytä halutessasi tai poista
+    /* Esimerkki stubi testausta varten -> Minna ei käytä tätä vaan mielummin mockia, TatuC käytä halutessasi tai poista
     Dao tipDao = new Dao() {
         
         public List<ReadingTip> testTips = new ArrayList<>();
@@ -32,7 +31,7 @@ public class LogicTest {
             testTips.add(new ReadingTip(0, author, title, url)); // poistettu random-viite, tähän voi keksiä testiviitteen
         }
         
-    };
+    }; */
     
     public LogicTest() {
     }
@@ -41,8 +40,6 @@ public class LogicTest {
     public void setUp() {
         testDao = mock(ReadingTipDao.class);
     }
-
-    // Testit -----------
     
     @Test
     public void newTipIsSaved() {
