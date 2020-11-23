@@ -4,18 +4,31 @@ plugins {
     id 'checkstyle'
 }
 
+mainClassName = 'miniprojekti.Main'
+
 repositories {
     jcenter()
 }   
 
+project.ext {
+    cucumberVersion = '6.8.1'
+    junitVersion = '4.13'
+}
+
 dependencies {
     testImplementation 'junit:junit:4.13'
+    testCompile 'io.cucumber:    testCompile 'io.cucumber:cucumber-java:', version: '6.8.1'
+    testCompile 'io.cucumber:cucumber-junit:' version: '6.8.1'
     implementation group: 'com.google.guava', name: 'guava', version: '29.0-jre'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.18'
     implementation 'org.xerial:sqlite-jdbc:3.30.1'
     implementation group: 'com.sparkjava', name: 'spark-core', version: '2.9.3'
     implementation group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
-    
+}
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
 }
 
 application {
@@ -25,3 +38,6 @@ application {
 
 task stage(dependsOn: ['clean', 'installDist'])
 
+run {
+    standardInput = System.in
+}
