@@ -17,8 +17,6 @@ project.ext {
 
 dependencies {
     testImplementation 'junit:junit:4.13'
-    testCompile 'io.cucumber:    testCompile 'io.cucumber:cucumber-java:', version: '6.8.1'
-    testCompile 'io.cucumber:cucumber-junit:' version: '6.8.1'
     implementation group: 'com.google.guava', name: 'guava', version: '29.0-jre'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.18'
     implementation 'org.xerial:sqlite-jdbc:3.30.1'
