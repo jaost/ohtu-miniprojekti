@@ -33,22 +33,25 @@ public class Main {
 
     private static void getIndexPage() {
         get("/", (req, res) -> {  
-            HashMap<String, String> model = new HashMap<>();
+            HashMap<String, Object> model = new HashMap<>();
             
+            model.put("tips", appLogic.retrieveAllTips());
             return new ModelAndView(model, "templates/index.html");
         }, new VelocityTemplateEngine());
     }
 
     private static void postReadingTip() {
         post("/", (req, res) -> {
-            HashMap<String, String> model = new HashMap<>();
+            HashMap<String, Object> model = new HashMap<>();
 
             appLogic.saveNewTip(req.queryParams("author"), req.queryParams("title"), req.queryParams("url"));
             
             model.put("tipAdded", "New tip added succesfully");
+            model.put("tips", appLogic.retrieveAllTips());
             
             return new ModelAndView(model, "templates/index.html");
         }, new VelocityTemplateEngine());
+        
     }
 
     private static void getReadingTipsPage() {

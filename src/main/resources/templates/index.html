@@ -19,6 +19,19 @@
     <p> URL: <input name="url"></input></p>
     <input type="submit" value="Add"></input>
   </form>
+  
+  <br/>
+  
+  <h1>Reading tips</h1>
+    <ul>
+        #foreach ( $tip in $tips )
+          <br/>
+          <li>$tip.author</li>
+          <li>$tip.title</li>
+          <li>$tip.url</li>
+          <br/>
+        #end
+    </ul>
 </body>
 
 </html>
