@@ -2,25 +2,24 @@ package miniprojekti.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import miniprojekti.data_access.Dao;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import miniprojekti.data_access.ReadingTipDao;
+import miniprojekti.domain.Logic;
+import org.junit.*;
+import static org.mockito.Mockito.*;
 
 public class LogicTest {
+    ReadingTipDao testDao;
     
-    // Esimerkki stubi testausta varten
+    
+    // Esimerkki stubi testausta varten -> Minna ei k√§yt√§ t√§t√§, TatuC k√§yt√§ halutessasi tai poista
     Dao tipDao = new Dao() {
         
         public List<ReadingTip> testTips = new ArrayList<>();
         
         @Override
         public List<ReadingTip> findAll() {
-            // N‰it‰ pit‰‰ muokata / lis‰t‰ jos tai kun aletaan validoida k‰ytt‰j‰syˆtteit‰
+
             testTips.add(new ReadingTip(1, "testAuthor", "testTitle", "https://www.google.com"));
             testTips.add(new ReadingTip(2, "testAuthor2", "testTitle2", "https://www.wikipedia.org"));
             testTips.add(new ReadingTip(3, "testAuthor3", "testTitle3", "https://www.ohjelmistotuotanto-hy.github.io"));
@@ -30,8 +29,7 @@ public class LogicTest {
 
         @Override
         public void save(String author, String title, String url) {
-            Random r = new Random();
-            testTips.add(new ReadingTip(r.nextInt(1000000), author, title, url));
+            testTips.add(new ReadingTip(0, author, title, url)); // poistettu random-viite, t√§h√§n voi keksi√§ testiviitteen
         }
         
     };
@@ -41,8 +39,16 @@ public class LogicTest {
     
     @Before
     public void setUp() {
+        testDao = mock(ReadingTipDao.class);
     }
 
     // Testit -----------
     
+    @Test
+    public void newTipIsSaved() {
+        Logic l = new Logic(testDao);
+        l.saveNewTip("testAuthor", "testTitle", "testUrl");
+        
+        verify(testDao).save(eq("testAuthor"), eq("testTitle"), eq("testUrl"));
+    }
 }

@@ -1,6 +1,6 @@
 package miniprojekti.domain;
 
-// Voitaisiin sijoittaa Mainin ja Dao:n välinen sovelluslogiikka ainakin aluksi tänne
+// Voitaisiin sijoittaa Mainin ja Dao:n vï¿½linen sovelluslogiikka ainakin aluksi tï¿½nne
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +10,13 @@ import miniprojekti.database.Database;
 
 public class Logic {
     
-    private static final ReadingTipDao readingTipDao = new ReadingTipDao(new Database("jdbc:sqlite:readingtips.db"));
+    private static ReadingTipDao readingTipDao = new ReadingTipDao(new Database("jdbc:sqlite:readingtips.db"));
     
-    public Logic() {     
+    public Logic() {
+    }
+    
+    public Logic(ReadingTipDao testiTipDao) {
+        this.readingTipDao = testiTipDao;
     }
     
     public List<HashMap<String, String>> retrieveAllTips() {
