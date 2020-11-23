@@ -49,5 +49,10 @@ public class ReadingTip {
     public void setUrl(String url) {
         this.url = url;
     }
+    
+    @Override
+    public String toString(){
+        return this.title + " by " + this.author + ": " + this.url;
+    }
 
 }

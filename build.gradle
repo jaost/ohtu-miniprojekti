@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'checkstyle'
+    id 'jacoco'
 }
 
 mainClassName = 'miniprojekti.Main'
@@ -19,6 +20,7 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     testImplementation 'io.cucumber:cucumber-java:6.8.1'
     testImplementation 'io.cucumber:cucumber-junit:6.8.1'
+    testCompile 'org.mockito:mockito-core:3.1.0'
     implementation group: 'com.google.guava', name: 'guava', version: '29.0-jre'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.18'
     implementation 'org.xerial:sqlite-jdbc:3.30.1'
