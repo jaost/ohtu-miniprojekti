@@ -9,3 +9,4 @@ build
 /bin
 /.nb-gradle/
 ReadingTips.db
+nbproject/
