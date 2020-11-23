@@ -9,7 +9,7 @@ import java.util.List;
 import miniprojekti.database.Database;
 import miniprojekti.domain.ReadingTip;
 
-public class ReadingTipDao {
+public class ReadingTipDao implements Dao {
     
     private Database database;
     
@@ -17,6 +17,7 @@ public class ReadingTipDao {
         this.database = database;
     }
     
+    @Override
     public List<ReadingTip> findAll() {
         List<ReadingTip> readingTips = new ArrayList<>();
         
@@ -38,6 +39,7 @@ public class ReadingTipDao {
         return readingTips;
     }
     
+    @Override
     public void save(String author, String title, String url) {
         try (Connection conn = database.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO readingtip (author, title, url) "
