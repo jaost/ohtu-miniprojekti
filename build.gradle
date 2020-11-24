@@ -9,6 +9,7 @@ mainClassName = 'miniprojekti.Main'
 
 repositories {
     jcenter()
+    mavenCentral()
 }   
 
 project.ext {
@@ -27,6 +28,13 @@ dependencies {
     implementation group: 'com.sparkjava', name: 'spark-core', version: '2.9.3'
     implementation group: 'com.sparkjava', name: 'spark-template-velocity', version: '2.7.1'
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-core', version: '4.3.0'
+    testCompile group: 'org.fluentlenium', name: 'fluentlenium-assertj', version: '4.3.0'  
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version:'3.14.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version:'3.14.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: '3.14.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.14.0'   
+    compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.33.0'
 }
 
 test {
