@@ -26,7 +26,7 @@ public class Stepdefs {
     Logic logic;
     ReadingTipDao testdao;
     WebDriver driver = new HtmlUnitDriver();
-    String baseUrl = "http://localhost:4567";
+    String baseUrl = "http://readingtips.herokuapp.com/";
 
     @Before
     public void setup() {
@@ -78,10 +78,13 @@ public class Stepdefs {
 
     private WebElement fillTheFields(WebElement element) {
         element = driver.findElement(By.name("author"));
+        element.clear();
         element.sendKeys("testiAuthor");
         element = driver.findElement(By.name("title"));
+        element.clear();
         element.sendKeys("testiTitle");
         element = driver.findElement(By.name("url"));
+        element.clear();
         element.sendKeys("www.fi");
         return element;
     }

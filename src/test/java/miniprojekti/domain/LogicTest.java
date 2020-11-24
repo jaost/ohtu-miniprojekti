@@ -48,14 +48,12 @@ public class LogicTest {
     public void newTipIsSaved() {
         Logic l = new Logic(testDao);
         l.saveNewTip("testAuthor", "testTitle", "testUrl");
-
         verify(testDao).save(eq("testAuthor"), eq("testTitle"), eq("testUrl"));
     }
 
     @Test
-    public void tipsAreListed() {
+    public void tipsAreListedDao() {
         List list = tipDao.findAll();
         assertEquals("testTitle by testAuthor: https://www.google.com", list.get(0).toString());
-
     }
 }
