@@ -31,7 +31,7 @@ public class Stepdefs {
     @Before
     public void setup() {
         testdao = mock(ReadingTipDao.class);
-        logic = mock(Logic.class);
+        logic = new Logic(testdao);
     }
 
     @Given("add is selected")
