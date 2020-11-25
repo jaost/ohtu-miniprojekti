@@ -52,7 +52,6 @@ public class Stepdefs {
     @Then("new reading tip is added")
     public void newReadingTipIsAdded() {
         WebElement element = driver.findElement(By.name("author"));
-        ;
         element = fillTheFields(element);
         element.submit();
         pageHasContent("Tip added succesfully");
