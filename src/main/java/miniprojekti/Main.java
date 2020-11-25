@@ -22,6 +22,8 @@ import spark.template.velocity.VelocityTemplateEngine;
 public class Main {
     
     private final static Logic appLogic = new Logic();
+    private static final String LAYOUT = "templates/layout.html";
+    
     
     public static void main(String[] args) {
         Spark.port(portSelection());
@@ -35,8 +37,10 @@ public class Main {
         get("/", (req, res) -> {  
             HashMap<String, Object> model = new HashMap<>();
             
+            model.put("template", "templates/index.html");
             model.put("tips", appLogic.retrieveAllTips());
-            return new ModelAndView(model, "templates/index.html");
+            
+            return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
     }
 
@@ -46,10 +50,11 @@ public class Main {
 
             appLogic.saveNewTip(req.queryParams("author"), req.queryParams("title"), req.queryParams("url"));
             
+            model.put("template", "templates/index.html");
             model.put("tipAdded", "New tip added succesfully");
             model.put("tips", appLogic.retrieveAllTips());
             
-            return new ModelAndView(model, "templates/index.html");
+            return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
         
     }
@@ -59,8 +64,10 @@ public class Main {
             HashMap<String, Object> model = new HashMap<>();
             
             model.put("tips", appLogic.retrieveAllTips());
+            model.put("template", "templates/tips.html");
             
-            return new ModelAndView(model, "templates/tips.html");
+            
+            return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
     }
     
