@@ -3,6 +3,8 @@ Ohjelmistotuotannon miniprojekti 2020
 
 [Projektin Backlog](https://docs.google.com/spreadsheets/d/1gEbBnn3pyKite4KeDW7rShsLSzKFn_H5VvEbBJExgo0)
 
+[Sprint Backlog](https://docs.google.com/spreadsheets/d/1gEbBnn3pyKite4KeDW7rShsLSzKFn_H5VvEbBJExgo0/edit#gid=742135810)
+
 [Sovellus verkossa](http://readingtips.herokuapp.com/)
 
 DoD:
