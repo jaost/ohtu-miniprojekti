@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+
+<head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<p>Tip</p>
+   
+<ul>
+    #foreach ( $tip in $tips )
+    <br />
+    <form action="/tips/:id" method="PUT">
+        
+        <label for="Author"> Author: </label>
+        <input name="Author" value="$tip.author"/>
+        <br/>
+        <label for="Title"> Title:    </label>
+        <input name="Title" value="$tip.title"/>
+        <br/>
+        <label for="URL"> URL:   </label>
+        <input name="URL" value="$tip.url"/>
+        <br/>
+        <input type="submit" value="Edit" />
+    </form>
+    <form action="/tips/tip.id" method="DELETE">
+        <input type="submit" value="Delete" /></form>
+    <br />
+    #end
+  </ul>
+</body>
+
+</html>
