@@ -31,6 +31,7 @@ public class Main {
         getIndexPage();
         postReadingTip();
         getReadingTipsPage();
+        addReadingTipPage();
     }
 
     private static void getIndexPage() {
@@ -48,7 +49,8 @@ public class Main {
         post("/", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
 
-            appLogic.saveNewTip(req.queryParams("author"), req.queryParams("title"), req.queryParams("url"));
+            // Ei toimi vielä
+            //appLogic.saveNewTip(req.queryParams("author"), req.queryParams("title"), req.queryParams("url"));
             
             model.put("template", "templates/index.html");
             model.put("tipAdded", "New tip added succesfully");
@@ -66,6 +68,19 @@ public class Main {
             model.put("tips", appLogic.retrieveAllTips());
             model.put("template", "templates/tips.html");
             
+            
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
+    }
+    
+    private static void addReadingTipPage() {
+        get("/add", (req, res) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            
+            String tipType = req.queryParams("tipTypes");
+            
+            model.put("type", tipType);
+            model.put("template", "templates/add.html");
             
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());

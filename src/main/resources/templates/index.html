@@ -1,14 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-  <!-- lomake tipseille -->
   #if ($tipAdded)
     <Strong>Tip added succesfully</Strong>
   #end
-  <h2>Add a new tip</h2>
-  <form action="/" method="POST">
-    <p> Author: <input name="author"></input></p>
-    <p> Title: <input name="title"></input></p>
-    <p> URL: <input name="url"></input></p>
-    <input type="submit" value="Add"></input>
+  
+  <h2>Adding a new tip</h2>
+  <form action="/add" method="GET">
+      <select name="tipTypes">
+          <option value="book">Book</option>
+          <option value="audio/video">Audio/Video</option>
+      </select>
+      <br/>
+      <input type="submit" value="Show form"/>
   </form>
   
   <br/>
