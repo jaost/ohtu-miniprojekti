@@ -35,7 +35,26 @@ public class Logic {
         
         return modelTips;
     }
-    
+    public List<HashMap<String, String>> retrieveAllTipsByAuthor(String author) {
+
+        List<ReadingTip> tips = readingTipDao.findAll();
+        ArrayList<HashMap<String, String>> modelTips = new ArrayList<>();
+        
+        for (ReadingTip tip : tips) {
+            
+            if(tip.getAuthor().equals(author)){
+            HashMap<String, String> tipMap = new HashMap<>();
+
+            tipMap.put("author", tip.getAuthor());
+            tipMap.put("title", tip.getTitle());
+            tipMap.put("url", tip.getUrl());
+            
+            modelTips.add(tipMap);
+            }
+        }
+        
+        return modelTips;
+    }
     public void saveNewTip(String author, String title, String url) {
         readingTipDao.save(author, title, url);
     }

@@ -22,6 +22,8 @@
           <li> Author: $tip.author</li>
           <li> Title : $tip.title</li>
           <li> URL: $tip.url</li>
+          <form action="/tips/$tip.author" method="GET">
+            <input type="submit" value="Open" /></form>
           <br/>
         #end
     </ul>

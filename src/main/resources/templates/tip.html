@@ -13,7 +13,7 @@
 <ul>
     #foreach ( $tip in $tips )
     <br />
-    <form action="/tips/:id" method="PUT">
+    <form action="/tips/$tip.author" method="PUT">
         
         <label for="Author"> Author: </label>
         <input name="Author" value="$tip.author"/>
@@ -26,7 +26,7 @@
         <br/>
         <input type="submit" value="Edit" />
     </form>
-    <form action="/tips/tip.id" method="DELETE">
+    <form action="/tips/$tip.author" method="DELETE">
         <input type="submit" value="Delete" /></form>
     <br />
     #end
