@@ -42,14 +42,15 @@ public class Logic {
         
         for (ReadingTip tip : tips) {
             
-            if(tip.getAuthor().equals(author)){
-            HashMap<String, String> tipMap = new HashMap<>();
+            if (tip.getAuthor().equals(author)) {
+                HashMap<String, String> tipMap = new HashMap<>();
 
-            tipMap.put("author", tip.getAuthor());
-            tipMap.put("title", tip.getTitle());
-            tipMap.put("url", tip.getUrl());
-            
-            modelTips.add(tipMap);
+                tipMap.put("id", String.valueOf(tip.getId()));
+                tipMap.put("author", tip.getAuthor());
+                tipMap.put("title", tip.getTitle());
+                tipMap.put("url", tip.getUrl());
+
+                modelTips.add(tipMap);
             }
         }
         
