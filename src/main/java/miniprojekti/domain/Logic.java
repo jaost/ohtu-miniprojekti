@@ -58,4 +58,24 @@ public class Logic {
     public void saveNewTip(String author, String title, String url) {
         readingTipDao.save(author, title, url);
     }
+    
+    public void deleteTipByID(int id) {
+        int rowsDeleted = readingTipDao.deleteByID(id);
+        System.out.println("Deleted " + rowsDeleted + " rows.");
+    }
+    
+    public void deleteTipByTitle(String title) {
+        int rowsDeleted = readingTipDao.deleteByTitle(title);
+        System.out.println("Deleted " + rowsDeleted + " rows.");
+    }
+    
+    public void updateTip(int id, String newAuthor, String newTitle, String newUrl) {
+        int rowsDeleted = readingTipDao.updateTip(id, newAuthor, newTitle, newUrl);
+        System.out.println("Updated " + rowsDeleted + " rows.");
+    }
+    
+    public void updateTip(ReadingTip tip) {
+        int rowsDeleted = readingTipDao.updateTip(tip);
+        System.out.println("Updated " + rowsDeleted + " rows.");
+    }
 }

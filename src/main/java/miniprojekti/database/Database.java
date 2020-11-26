@@ -9,16 +9,26 @@ import java.sql.Statement;
 public class Database {
     
     private String databaseAddress;
+    private boolean isLocal;
     
     public Database(String databaseAddress) {
         this.databaseAddress = databaseAddress;
         try (Connection connection = this.getConnection()) {
             Statement s = connection.createStatement();
-            s.execute("CREATE TABLE IF NOT EXISTS readingtip " +
+            if (isLocal) {
+                s.execute("CREATE TABLE IF NOT EXISTS readingtip " +
+                    "(id INTEGER PRIMARY KEY, " +
+                    "author VARCHAR(255), " +
+                    "title VARCHAR(255), " +
+                    "url VARCHAR(255))");
+            } else {
+                s.execute("CREATE TABLE IF NOT EXISTS readingtip " +
                     "(id SERIAL PRIMARY KEY, " +
                     "author VARCHAR(255), " +
                     "title VARCHAR(255), " +
                     "url VARCHAR(255))");
+            }
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -37,8 +47,10 @@ public class Database {
             String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
             
             System.out.println(dbUrl + " : " + username + " : " + password);
+            this.isLocal = false;
             return DriverManager.getConnection(dbUrl, username, password);
         }
+        this.isLocal = true;
         return DriverManager.getConnection(databaseAddress);
     }
 }

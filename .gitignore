@@ -8,5 +8,5 @@ build
 .settings/
 /bin
 /.nb-gradle/
-ReadingTips.db
+*.db
 nbproject/

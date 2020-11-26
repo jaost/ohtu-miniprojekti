@@ -52,4 +52,68 @@ public class ReadingTipDao implements Dao {
             System.out.println(e);
         }
     }
+    
+    @Override
+    public int deleteByID(int id) {
+        int rowsDeleted = 0;
+        try (Connection conn = database.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM readingtip WHERE id=?");
+            stmt.setInt(1, id);
+            rowsDeleted = stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+            return -1;
+        }
+        return rowsDeleted;
+    }
+    
+    @Override
+    public int deleteByTitle(String title) {
+        int rowsDeleted = 0;
+        try (Connection conn = database.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM readingtip WHERE title=?");
+            stmt.setString(1, title);
+            rowsDeleted = stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+            return -1;
+        }
+        return rowsDeleted;
+    }
+    
+    @Override
+    public int updateTip(int id, String newAuthor, String newTitle, String newUrl) {
+        int rowsUpdated = 0;
+        try (Connection conn = database.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE readingtip SET author=?, title=?, url=? WHERE id=?");
+            stmt.setString(1, newAuthor);
+            stmt.setString(2, newTitle);
+            stmt.setString(3, newUrl);
+            stmt.setInt(4, id);
+            rowsUpdated = stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+            return -1;
+        }
+        return rowsUpdated;
+    }
+    
+    @Override
+    public int updateTip(ReadingTip tip) {
+        int rowsUpdated = 0;
+        try (Connection conn = database.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE readingtip SET author=?, title=?, url=? WHERE id=?");
+            stmt.setString(1, tip.getAuthor());
+            stmt.setString(2, tip.getTitle());
+            stmt.setString(3, tip.getUrl());
+            stmt.setInt(4, tip.getId());
+            rowsUpdated = stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+            return -1;
+        }
+        return rowsUpdated;
+    }
+    
+    
 }

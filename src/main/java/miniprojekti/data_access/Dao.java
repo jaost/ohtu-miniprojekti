@@ -13,4 +13,12 @@ public interface Dao {
 
     void save(String author, String title, String url);
     
+    int deleteByID(int id);
+    
+    int deleteByTitle(String title);
+    
+    int updateTip(int id, String newAuthor, String newTitle, String newUrl);
+    
+    int updateTip(ReadingTip tip);
+    
 }
