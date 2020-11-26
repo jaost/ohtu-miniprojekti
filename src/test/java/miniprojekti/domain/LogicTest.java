@@ -34,6 +34,28 @@ public class LogicTest {
                                                                  // testiviitteen
         }
 
+        @Override
+        public int deleteByID(int id) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public int deleteByTitle(String title) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public int updateTip(int id, String newAuthor, String newTitle, String newUrl) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public int updateTip(ReadingTip tip) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+        
+        
+
     };
 
     public LogicTest() {
