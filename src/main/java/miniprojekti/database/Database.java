@@ -15,6 +15,7 @@ public class Database {
         this.databaseAddress = databaseAddress;
         try (Connection connection = this.getConnection()) {
             Statement s = connection.createStatement();
+            // PSQL needs SERIAL for autoincrementing but SQLITE doesn't recognize it
             if (isLocal) {
                 s.execute("CREATE TABLE IF NOT EXISTS readingtip " +
                     "(id INTEGER PRIMARY KEY, " +

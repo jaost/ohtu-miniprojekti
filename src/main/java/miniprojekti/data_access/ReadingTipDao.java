@@ -53,6 +53,11 @@ public class ReadingTipDao implements Dao {
         }
     }
     
+    /**
+     * Deletes the tip with the ID given as parameter if found.
+     * @param id ID to look for and delete from the database.
+     * @return Number of rows deleted (-1 if an error happens)
+     */
     @Override
     public int deleteByID(int id) {
         int rowsDeleted = 0;
@@ -67,6 +72,11 @@ public class ReadingTipDao implements Dao {
         return rowsDeleted;
     }
     
+    /**
+     * Deletes the tip with the title given as parameter if found.
+     * @param title Title to look for and delete from the database.
+     * @return Number of rows deleted (-1 if an error happens)
+     */
     @Override
     public int deleteByTitle(String title) {
         int rowsDeleted = 0;
@@ -81,6 +91,14 @@ public class ReadingTipDao implements Dao {
         return rowsDeleted;
     }
     
+    /**
+     * Updates the tip with given ID by the values given as parameters.
+     * @param id ID of the tip to be updated
+     * @param newAuthor What the author of the tip will be updated to
+     * @param newTitle What the title of the tip will be updated to
+     * @param newUrl What the tip of the tip will be updated to
+     * @return Number of rows updated (Should be 1 as IDs are unique, -1 if an error happens)
+     */
     @Override
     public int updateTip(int id, String newAuthor, String newTitle, String newUrl) {
         int rowsUpdated = 0;
@@ -98,6 +116,12 @@ public class ReadingTipDao implements Dao {
         return rowsUpdated;
     }
     
+    
+    /**
+     * Updates the given tip with its set values in the database by ID
+     * @param tip The tip with the id that is being updated by its values
+     * @return Number of rows updated (Should be 1 as IDs are unique, -1 if an error happens)
+     */
     @Override
     public int updateTip(ReadingTip tip) {
         int rowsUpdated = 0;
