@@ -37,7 +37,7 @@ public class Stepdefs {
     @Given("add is selected")
     public void addIsSelected() {
         driver.get(baseUrl);
-        assertTrue(driver.getPageSource().contains("Add a new tip"));
+        assertTrue(driver.getPageSource().contains("Adding a new tip"));
     }
 
     @When("new reading tip is entered")
@@ -60,7 +60,7 @@ public class Stepdefs {
     @Given("User is on the frontpage")
     public void isFrontPage() {
         driver.get(baseUrl);
-        pageHasContent("Add a new tip");
+        pageHasContent("Adding a new tip");
     }
 
     @Then("User can see the list")
