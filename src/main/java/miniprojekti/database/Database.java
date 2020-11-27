@@ -24,7 +24,7 @@ public class Database {
                     "url VARCHAR(255))");
                 s.execute("CREATE TABLE IF NOT EXISTS tip ("
                         + "	id INTEGER NOT NULL,"
-                        + "	otsikko VARCHAR(144),"
+                        + "	title VARCHAR(144),"
                         + "	type VARCHAR(144),"
                         + "	note VARCHAR(144),"
                         + "	PRIMARY KEY (id)"
