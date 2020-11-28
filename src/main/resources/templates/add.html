@@ -2,16 +2,20 @@
   <h1>Add ${type}</h1>
   <form action="/" method="GET">
      
-    <p> Title: <input name="title"></input></p>
-    <p> Type: <input name="type"></input></p>
+    <p> Title: <input name="title"/></p>
+    <p> Type: <input name="type"/></p>
+    <p> Note: <input name="note"/></p>
+    <p> Url: <input name="url"/></p>
     
     #if ($type == "book")
-    <p> Writer: <input name="writer"></input></p>
+    <p> Author: <input name="author"/></p>
     <p> ISBN: <input name="isbn"/></p>
-    #elseif ($type == "audio/video")
-    <p> TestField1: <input name="testfield1"/></p>
-    <p> TestField2: <input name="testfield2"/></p>
+    
+    #elseif ($type == "podcast")
+    <p> Author: <input name="author"/></p>
+    <p> Description: <input name="description"/></p>
     #end
+
     <input type="submit" value="Add"/>
   </form>
   
