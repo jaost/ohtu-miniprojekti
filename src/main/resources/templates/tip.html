@@ -1,26 +1,55 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <form action="/" method="GET">
-    <input type="submit" value="Return"/>
+    <input type="submit" value="Return" />
 </form>
 
 <ul>
     #foreach ( $tip in $tips )
     <br />
-    <form name="${tip.id}" action="/tips/$tip.author" method="PUT" id="${tip.id}">
-        
-        <label for="Author"> Author: </label>
-        <input name="Author" value="$tip.author" disabled="true"/>
-        <br/>
-        <label for="Title"> Title:    </label>
-        <input name="Title" value="$tip.title" disabled="true"/>
-        <br/>
-        <label for="URL"> URL:   </label>
-        <input name="URL" value="$tip.url" disabled="true"/>
-        <br/>
-        <input type="button" value="Edit" onclick="removeDisabled($tip.id)"/>
+    <form name="${tip.id}" action="/tips/$tip.id" method="PUT" id="${tip.id}">
+
+        <label for="title"> Title: </label>
+        <input name="title" value="$tip.title" disabled="true" />
+        <br />
+        <label for="type"> Type: </label>
+        <input name="type" value="$tip.type" disabled="true" />
+        <br />
+        <label for="note"> Note: </label>
+        <input name="note" value="$tip.note" disabled="true" />
+        <br />
+        #if ($type == "book")
+        <label for="author"> Author: </label>
+        <input name="author" value="$tip.author" disabled="true" />
+        <br />
+        <label for="isbn"> ISBN: </label>
+        <input name="isbn" value="$tip.isbn" disabled="true" />
+        <br />
+        <label for="url"> URL: </label>
+        <input name="url" value="$tip.url" disabled="true" />
+        <br />
+        #elseif ($type == "blogpost")
+        <label for="url"> URL: </label>
+        <input name="url" value="$tip.url" disabled="true" />
+        <br />
+        #elseif ($type == "podcast")
+        <label for="author"> Author: </label>
+        <input name="author" value="$tip.author" disabled="true" />
+        <br />
+        <label for="description"> Description: </label>
+        <input name="description" value="$tip.description" disabled="true" />
+        <br />
+        <label for="url"> URL: </label>
+        <input name="url" value="$tip.url" disabled="true" />
+        <br />
+        #elseif ($type == "videotip")
+        <label for="url"> URL: </label>
+        <input name="url" value="$tip.url" disabled="true" />
+        <br />
+        #end
+        <input type="button" value="Edit" onclick="removeDisabled($tip.id)" />
     </form>
-    <form action="/tips/$tip.author" method="DELETE">
+    <form action="/tips/$tip.id" method="DELETE">
         <input type="submit" value="Delete" />
     </form>
     <br />
@@ -29,10 +58,10 @@
 
 <script>
     function removeDisabled(id) {
-      var form = document.getElementById(id);
-      var elements = form.getElementsByTagName("input");
-      for (var i = 0; i < elements.length; i++) {
-          elements[i].disabled = false;
-      }
+        var form = document.getElementById(id);
+        var elements = form.getElementsByTagName("input");
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].disabled = false;
+        }
     }
 </script>
