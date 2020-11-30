@@ -21,17 +21,35 @@ public class Logic {
     }
     
     public List<HashMap<String, String>> retrieveAllTips() {
-        List<ReadingTip> tips = readingTipDao.findAll();
+        List<Tip> tips = readingTipDao.findAll_();
         ArrayList<HashMap<String, String>> modelTips = new ArrayList<>();
         
-        for (ReadingTip tip : tips) {
+        for (Tip tip : tips) {
             HashMap<String, String> tipMap = new HashMap<>();
-
-            tipMap.put("author", tip.getAuthor());
+            tipMap.put("id", String.valueOf(tip.getTipId()));
             tipMap.put("title", tip.getTitle());
-            tipMap.put("url", tip.getUrl());
+            tipMap.put("type", tip.getType());
+            tipMap.put("note", tip.getNote());
 
             modelTips.add(tipMap);
+        }
+        
+        return modelTips;
+    }
+    public List<HashMap<String, String>> retrieveTip(String s) {
+        int id = Integer.parseInt(s);
+        List<Tip> tips = readingTipDao.findAll_();
+        ArrayList<HashMap<String, String>> modelTips = new ArrayList<>();
+        for (Tip tip : tips) {
+            if (tip.getTipId() == id) {
+                HashMap<String, String> tipMap = new HashMap<>();
+                tipMap.put("id", String.valueOf(tip.getTipId()));
+                tipMap.put("title", tip.getTitle());
+                tipMap.put("type", tip.getType());
+                tipMap.put("note", tip.getNote());
+                modelTips.add(tipMap);
+            }
+
         }
         
         return modelTips;

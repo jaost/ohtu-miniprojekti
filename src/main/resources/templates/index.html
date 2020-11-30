@@ -21,10 +21,11 @@
     <ul>
         #foreach ( $tip in $tips )
           <br/>
-          <li> Author: $tip.author</li>
+          <li> Id: $tip.id</li>
+          <li> Type: $tip.type</li>
           <li> Title : $tip.title</li>
-          <li> URL: $tip.url</li>
-          <form action="/tips/$tip.author" method="GET">
+          <li> Note: $tip.note</li>
+          <form action="/tips/$tip.id" method="GET">
             <input type="submit" value="Open" /></form>
           <br/>
         #end

@@ -71,7 +71,7 @@ public class Main {
             String url = req.queryParams("url");
             String author = "";
             int id = Integer.parseInt(req.queryParams("id"));
-            
+
             switch (type) {
                 case "Book":
                     author = req.queryParams("author");
@@ -80,15 +80,15 @@ public class Main {
                     break;
 
                 case "Video":
-                model.put("editedTip", appLogic.updateTip(id, type, title, note, url));
+                    model.put("editedTip", appLogic.updateTip(id, type, title, note, url));
                     break;
 
                 case "Podcast":
-                author = req.queryParams("author");
-                model.put("editedTip", appLogic.updateTip(id, type, title, note, url, author));
+                    author = req.queryParams("author");
+                    model.put("editedTip", appLogic.updateTip(id, type, title, note, url, author));
                     break;
                 case "Blogpost":
-                model.put("editedTip", appLogic.updateTip(id, type, title, note, url));
+                    model.put("editedTip", appLogic.updateTip(id, type, title, note, url));
                     break;
                 default:
                     break;
@@ -127,10 +127,12 @@ public class Main {
     }
 
     private static void singleTipPage() {
-        get("/tips/:author", (req, res) -> {
+        get("/tips/:id", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
-            String author = req.params("author");
-            model.put("tips", appLogic.retrieveAllTipsByAuthor(author));
+
+            String id = req.params("id");
+            
+            model.put("tips", appLogic.retrieveTip(id));
             model.put("template", "templates/tip.html");
 
             return new ModelAndView(model, LAYOUT);
