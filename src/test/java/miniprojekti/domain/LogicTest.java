@@ -78,4 +78,9 @@ public class LogicTest {
         List list = tipDao.findAll();
         assertEquals("testTitle by testAuthor: https://www.google.com", list.get(0).toString());
     }
+    
+    @Test
+    public void tipIsDeletedByID() {
+        assertEquals(1, tipDao.deleteByID(1));
+    }
 }
