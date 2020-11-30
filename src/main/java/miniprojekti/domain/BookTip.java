@@ -10,8 +10,8 @@ public class BookTip extends Tip{
     private String isbn;
     private String url;
     
-    public BookTip(int tipId, String title, String type, String note, int id, String author, String isbn, String url) {
-        super(tipId, title, type, note);
+    public BookTip(int tipId, String title, String note, int id, String author, String isbn, String url) {
+        super(tipId, title, "Book", note);
         this.id = id;
         this.author = author;
         this.isbn = isbn;
@@ -19,7 +19,7 @@ public class BookTip extends Tip{
     }
     
     public static BookTip createBook(Map<String, String> attr) {
-        return new BookTip(0, attr.get("title"), attr.get("type"), attr.get("note"), 0, attr.get("author"), attr.get("isbn"), attr.get("url"));
+        return new BookTip(0, attr.get("title"), attr.get("note"), 0, attr.get("author"), attr.get("isbn"), attr.get("url"));
     }
 
     public int getId() {

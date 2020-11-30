@@ -59,7 +59,6 @@ public class ReadingTipDao implements Dao {
                         tips.add(new BookTip(
                                 result.getInt("id"), 
                                 result.getString("title"), 
-                                result.getString("type"),
                                 result.getString("note"),
                                 rs.getInt("id"),
                                 rs.getString("author"),
@@ -74,7 +73,6 @@ public class ReadingTipDao implements Dao {
                         tips.add(new VideoTip(
                                 result.getInt("id"), 
                                 result.getString("title"), 
-                                result.getString("type"),
                                 result.getString("note"),
                                 rs.getInt("id"),
                                 rs.getString("url")
@@ -87,7 +85,6 @@ public class ReadingTipDao implements Dao {
                         tips.add(new BlogpostTip(
                                 result.getInt("id"), 
                                 result.getString("title"), 
-                                result.getString("type"),
                                 result.getString("note"),
                                 rs.getInt("id"),
                                 rs.getString("url")
@@ -100,7 +97,6 @@ public class ReadingTipDao implements Dao {
                         tips.add(new PodcastTip(
                                 result.getInt("id"), 
                                 result.getString("title"), 
-                                result.getString("type"),
                                 result.getString("note"),
                                 rs.getInt("id"),
                                 rs.getString("author"),
