@@ -89,4 +89,9 @@ public class LogicTest {
         assertEquals(1, tipDao.deleteByTitle("testAuthor"));
     }
     
+    @Test
+    public void tipIsUpdated() {
+        assertEquals(1, tipDao.updateTip(1, "testAuthor", "testTitle", "https://www.google.com"));
+    }
+    
 }
