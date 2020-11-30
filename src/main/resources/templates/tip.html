@@ -50,6 +50,9 @@
         <br />
         #end
         <input type="button" value="Edit" onclick="removeDisabled($tip.id)" />
+        <form action="/tips/$tip.id" method="PUT">
+            <input type="submit" value="Save" />
+        </form>
     </form>
     <form action="/tips/$tip.id" method="DELETE">
         <input type="submit" value="Delete" />
