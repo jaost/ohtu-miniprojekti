@@ -1,5 +1,7 @@
 package miniprojekti.domain;
 
+import java.util.Map;
+
 public class BlogpostTip extends Tip{
     
     private int id;
@@ -9,6 +11,10 @@ public class BlogpostTip extends Tip{
         super(tipId, title, type, note);
         this.id = id;
         this.url = url;
+    }
+    
+    public static BlogpostTip createBlogpostTip(Map<String, String> attr) {
+        return new BlogpostTip(0, attr.get("title"), attr.get("type"), attr.get("note"), 0, attr.get("url"));
     }
 
     public int getId() {

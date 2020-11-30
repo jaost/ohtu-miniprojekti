@@ -5,6 +5,7 @@ package miniprojekti.domain;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import miniprojekti.data_access.ReadingTipDao;
 import miniprojekti.database.Database;
 
@@ -56,8 +57,16 @@ public class Logic {
         
         return modelTips;
     }
+    
+    /*
     public void saveNewTip(String author, String title, String url) {
         readingTipDao.save(author, title, url);
+    }*/
+    
+    
+    public void saveNewTip(Map<String, String> tipAttributes) {
+        // Tämä talletetaan daossa
+        Tip toSave = TipFactory.createTip(tipAttributes);
     }
     
     public void deleteTipByID(int id) {
@@ -79,4 +88,6 @@ public class Logic {
         int rowsDeleted = readingTipDao.updateTip(tip);
         System.out.println("Updated " + rowsDeleted + " rows.");
     }
+    
+    
 }
