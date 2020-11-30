@@ -52,7 +52,7 @@ public class ReadingTipDao implements Dao {
                 PreparedStatement stmt;
                 ResultSet rs;
                 switch (result.getString("type")) {
-                    case "book":
+                    case "Book":
                         stmt  = conn.prepareStatement("SELECT id, author, isbn, url FROM book WHERE tip_id = ?");
                         stmt.setInt(1, result.getInt("id"));
                         rs = stmt.executeQuery();
@@ -66,7 +66,7 @@ public class ReadingTipDao implements Dao {
                                 rs.getString("url")
                         ));
                         break;
-                    case "video":
+                    case "Video":
                         stmt  = conn.prepareStatement("SELECT id, url FROM video WHERE tip_id = ?");
                         stmt.setInt(1, result.getInt("id"));
                         rs = stmt.executeQuery();
@@ -78,7 +78,7 @@ public class ReadingTipDao implements Dao {
                                 rs.getString("url")
                         ));
                         break;
-                    case "blogpost":
+                    case "Blogpost":
                         stmt  = conn.prepareStatement("SELECT id, url FROM blogpost WHERE tip_id = ?");
                         stmt.setInt(1, result.getInt("id"));
                         rs = stmt.executeQuery();
@@ -90,7 +90,7 @@ public class ReadingTipDao implements Dao {
                                 rs.getString("url")
                         ));
                         break;
-                    case "podcast":
+                    case "Podcast":
                         stmt  = conn.prepareStatement("SELECT id, author, description, url FROM podcast WHERE tip_id = ?");
                         stmt.setInt(1, result.getInt("id"));
                         rs = stmt.executeQuery();
