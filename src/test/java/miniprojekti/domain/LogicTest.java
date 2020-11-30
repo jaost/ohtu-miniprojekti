@@ -45,12 +45,7 @@ public class LogicTest {
         }
 
         @Override
-        public int updateTip(int id, String newAuthor, String newTitle, String newUrl) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public int updateTip(ReadingTip tip) {
+        public int updateTip(Tip tip) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
         

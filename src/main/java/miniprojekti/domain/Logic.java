@@ -79,12 +79,7 @@ public class Logic {
         System.out.println("Deleted " + rowsDeleted + " rows.");
     }
     
-    public void updateTip(int id, String newAuthor, String newTitle, String newUrl) {
-        int rowsDeleted = readingTipDao.updateTip(id, newAuthor, newTitle, newUrl);
-        System.out.println("Updated " + rowsDeleted + " rows.");
-    }
-    
-    public void updateTip(ReadingTip tip) {
+    public void updateTip(Tip tip) {
         int rowsDeleted = readingTipDao.updateTip(tip);
         System.out.println("Updated " + rowsDeleted + " rows.");
     }
