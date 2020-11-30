@@ -73,7 +73,7 @@ public class LogicTest {
         verify(testDao).save(eq("testAuthor"), eq("testTitle"), eq("testUrl"));
     }
 
-    @Test
+   /* @Test
     public void tipsAreListedDao() {
         List list = tipDao.findAll();
         assertEquals("testTitle by testAuthor: https://www.google.com", list.get(0).toString());
@@ -92,6 +92,6 @@ public class LogicTest {
     @Test
     public void tipIsUpdated() {
         assertEquals(1, tipDao.updateTip(1, "testAuthor", "testTitle", "https://www.google.com"));
-    }
+    }*/
     
 }
