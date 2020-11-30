@@ -207,7 +207,7 @@ public class ReadingTipDao implements Dao {
     public int deleteByID(int id) {
         int rowsDeleted = 0;
         try (Connection conn = database.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM readingtip WHERE id=?");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM tip WHERE id=?");
             stmt.setInt(1, id);
             rowsDeleted = stmt.executeUpdate();
         } catch (Exception e) {
@@ -226,7 +226,7 @@ public class ReadingTipDao implements Dao {
     public int deleteByTitle(String title) {
         int rowsDeleted = 0;
         try (Connection conn = database.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM readingtip WHERE title=?");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM tip WHERE title=?");
             stmt.setString(1, title);
             rowsDeleted = stmt.executeUpdate();
         } catch (Exception e) {
@@ -236,31 +236,19 @@ public class ReadingTipDao implements Dao {
         return rowsDeleted;
     }
     
-    /**
-     * Updates the tip with given ID by the values given as parameters.
-     * @param id ID of the tip to be updated
-     * @param newAuthor What the author of the tip will be updated to
-     * @param newTitle What the title of the tip will be updated to
-     * @param newUrl What the tip of the tip will be updated to
-     * @return Number of rows updated (Should be 1 as IDs are unique, -1 if an error happens)
-     */
     @Override
-    public int updateTip(int id, String newAuthor, String newTitle, String newUrl) {
-        int rowsUpdated = 0;
+    public int deleteTip(Tip tip) {
+        int rowsDeleted = 0;
         try (Connection conn = database.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE readingtip SET author=?, title=?, url=? WHERE id=?");
-            stmt.setString(1, newAuthor);
-            stmt.setString(2, newTitle);
-            stmt.setString(3, newUrl);
-            stmt.setInt(4, id);
-            rowsUpdated = stmt.executeUpdate();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM tip WHERE id=?");
+            stmt.setInt(1, tip.getTipId());
+            rowsDeleted = stmt.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
             return -1;
         }
-        return rowsUpdated;
+        return rowsDeleted;
     }
-    
     
     /**
      * Updates the given tip with its set values in the database by ID
@@ -268,21 +256,58 @@ public class ReadingTipDao implements Dao {
      * @return Number of rows updated (Should be 1 as IDs are unique, -1 if an error happens)
      */
     @Override
-    public int updateTip(ReadingTip tip) {
+    public int updateTip(Tip tip) {
         int rowsUpdated = 0;
         try (Connection conn = database.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE readingtip SET author=?, title=?, url=? WHERE id=?");
-            stmt.setString(1, tip.getAuthor());
-            stmt.setString(2, tip.getTitle());
-            stmt.setString(3, tip.getUrl());
-            stmt.setInt(4, tip.getId());
-            rowsUpdated = stmt.executeUpdate();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE tip SET title=?, type=?, note=? WHERE id=?");
+            stmt.setString(1, tip.getTitle());
+            stmt.setString(2, tip.getType());
+            stmt.setString(3, tip.getNote());
+            stmt.setInt(4, tip.getTipId());
+            rowsUpdated += stmt.executeUpdate();
+            
+            switch (tip.getType()) {
+                case "Book":
+                    BookTip bookTip = (BookTip) tip;
+                    stmt = conn.prepareStatement("UPDATE book SET author=?, isbn=?, url=? WHERE tip_id=?");
+                    stmt.setString(1, bookTip.getAuthor());
+                    stmt.setString(2, bookTip.getIsbn());
+                    stmt.setString(3, bookTip.getUrl());
+                    stmt.setInt(4, bookTip.getTipId());
+                    rowsUpdated += stmt.executeUpdate();
+                    break;
+                case "Video":
+                    VideoTip videoTip = (VideoTip) tip;
+                    stmt = conn.prepareStatement("UPDATE video SET url=? WHERE tip_id=?");
+                    stmt.setString(1, videoTip.getUrl());
+                    stmt.setInt(2, videoTip.getTipId());
+                    rowsUpdated += stmt.executeUpdate();
+                    break;
+                case "Blogpost":
+                    BlogpostTip blogpostTip = (BlogpostTip) tip;
+                    stmt = conn.prepareStatement("UPDATE blogpost SET url=? WHERE tip_id=?");
+                    stmt.setString(1, blogpostTip.getUrl());
+                    stmt.setInt(2, blogpostTip.getTipId());
+                    rowsUpdated += stmt.executeUpdate();
+                    break;
+                case "Podcast":
+                    PodcastTip podcastTip = (PodcastTip) tip;
+                    stmt = conn.prepareStatement("UPDATE podcast SET author=? description=? url=? WHERE tip_id=?");
+                    stmt.setString(1, podcastTip.getAuthor());
+                    stmt.setString(2, podcastTip.getDescription());
+                    stmt.setString(3, podcastTip.getUrl());
+                    stmt.setInt(4, podcastTip.getTipId());
+                    rowsUpdated += stmt.executeUpdate();
+                    break;
+                default:
+                    break;
+            }
+
         } catch (Exception e) {
             System.out.println(e);
-            return -1;
         }
+        
         return rowsUpdated;
     }
-    
     
 }
