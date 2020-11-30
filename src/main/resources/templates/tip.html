@@ -3,7 +3,9 @@
 <form action="/" method="GET">
     <input type="submit" value="Return" />
 </form>
-
+#if ($tipDeleted)
+    <Strong>Tip has been deleted</Strong>
+  #end
 <ul>
     #foreach ( $tip in $tips )
     <br />

@@ -16,34 +16,48 @@ import spark.Route;
 import spark.Spark;
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.put;
+import static spark.Spark.delete;
 import spark.template.velocity.VelocityTemplateEngine;
 
 // Main tulee toimimaan Controllerina
 public class Main {
-    
+
     private final static Logic appLogic = new Logic();
     private static final String LAYOUT = "templates/layout.html";
-    
-    
+
     public static void main(String[] args) {
         Spark.port(portSelection());
-        
+
         getIndexPage();
         postReadingTip();
         getReadingTipsPage();
         addReadingTipPage();
-        SingleTipPage();
+        singleTipPage();
+        deleteTip();
     }
 
     private static void getIndexPage() {
-        get("/", (req, res) -> {  
+        get("/", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
-            
+
             model.put("template", "templates/index.html");
             model.put("tips", appLogic.retrieveAllTips());
-            
+
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
+    }
+
+    private static void deleteTip() {
+        delete("/tip/:id", (req, res) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("template", "templates/index.html");
+            model.put("tipDeleted", "Tip has been deleted");
+            int id = Integer.parseInt(req.queryParams("id"));
+            appLogic.deleteTipByID(id);
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
+
     }
 
     private static void postReadingTip() {
@@ -51,55 +65,58 @@ public class Main {
             HashMap<String, Object> model = new HashMap<>();
 
             // Ei toimi viel�
-            //appLogic.saveNewTip(req.queryParams("author"), req.queryParams("title"), req.queryParams("url"));
-            
+            // appLogic.saveNewTip(req.queryParams("author"), req.queryParams("title"),
+            // req.queryParams("url"));
+
             model.put("template", "templates/index.html");
             model.put("tipAdded", "New tip added succesfully");
             model.put("tips", appLogic.retrieveAllTips());
-            
+
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
-        
+
     }
 
     private static void getReadingTipsPage() {
         get("/tips", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
-            
+
             model.put("tips", appLogic.retrieveAllTips());
             model.put("template", "templates/tips.html");
-            
+
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
     }
-    private static void SingleTipPage() {
+
+    private static void singleTipPage() {
         get("/tips/:author", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
             String author = req.params("author");
             model.put("tips", appLogic.retrieveAllTipsByAuthor(author));
             model.put("template", "templates/tip.html");
-            
+
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
     }
+
     private static void addReadingTipPage() {
         get("/add", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
-            
+
             String tipType = req.queryParams("tipTypes");
-            
+
             model.put("type", tipType);
             model.put("template", "templates/add.html");
-            
+
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
     }
-    
+
     private static Integer portSelection() {
         ProcessBuilder process = new ProcessBuilder();
         if (process.environment().get("PORT") != null) {
             return Integer.parseInt(process.environment().get("PORT"));
-        } 
+        }
         return 4567;
     }
 }
