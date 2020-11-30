@@ -35,7 +35,7 @@ public class Main {
         addReadingTipPage();
         singleTipPage();
         deleteTip();
-       // editTip();
+        // editTip();
     }
 
     private static void getIndexPage() {
@@ -50,54 +50,40 @@ public class Main {
     }
 
     private static void deleteTip() {
-        delete("/tip/:id", (req, res) -> {
+        get("/tips/delete/:id", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
             model.put("template", "templates/index.html");
-            model.put("tipDeleted", "Tip has been deleted");
-            int id = Integer.parseInt(req.queryParams("id"));
+            String s = req.params(":id");
+            int id = Integer.parseInt(s);
             appLogic.deleteTipByID(id);
-            return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());
-
-    }
-
-  /*  private static void editTip() {
-        put("/tip/:id", (req, res) -> {
-            HashMap<String, Object> model = new HashMap<>();
-            model.put("template", "templates/index.html");
-            String type = req.queryParams("type");
-            String title = req.queryParams("title");
-            String note = req.queryParams("note");
-            String url = req.queryParams("url");
-            String author = "";
-            int id = Integer.parseInt(req.queryParams("id"));
-
-            switch (type) {
-                case "Book":
-                    author = req.queryParams("author");
-                    String isbn = req.queryParams("isbn");
-                    model.put("editedTip", appLogic.updateTip(id, type, title, note, url, author, isbn));
-                    break;
-
-                case "Video":
-                    model.put("editedTip", appLogic.updateTip(id, type, title, note, url));
-                    break;
-
-                case "Podcast":
-                    author = req.queryParams("author");
-                    model.put("editedTip", appLogic.updateTip(id, type, title, note, url, author));
-                    break;
-                case "Blogpost":
-                    model.put("editedTip", appLogic.updateTip(id, type, title, note, url));
-                    break;
-                default:
-                    break;
-            }
-
+            model.put("deleted", "Tip deleted!");
+            res.redirect("/");
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
     }
-*/
+
+    /*
+     * private static void editTip() { put("/tips/:id", (req, res) -> {
+     * HashMap<String, Object> model = new HashMap<>(); model.put("template",
+     * "templates/index.html"); String type = req.queryParams("type"); String title
+     * = req.queryParams("title"); String note = req.queryParams("note"); String url
+     * = req.queryParams("url"); String author = ""; int id =
+     * Integer.parseInt(req.queryParams("id"));
+     * 
+     * switch (type) { case "Book": author = req.queryParams("author"); String isbn
+     * = req.queryParams("isbn"); model.put("editedTip", appLogic.updateTip(id,
+     * type, title, note, url, author, isbn)); break;
+     * 
+     * case "Video": model.put("editedTip", appLogic.updateTip(id, type, title,
+     * note, url)); break;
+     * 
+     * case "Podcast": author = req.queryParams("author"); model.put("editedTip",
+     * appLogic.updateTip(id, type, title, note, url, author)); break; case
+     * "Blogpost": model.put("editedTip", appLogic.updateTip(id, type, title, note,
+     * url)); break; default: break; }
+     * 
+     * return new ModelAndView(model, LAYOUT); }, new VelocityTemplateEngine()); }
+     */
     private static void postReadingTip() {
         post("/", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
@@ -131,7 +117,7 @@ public class Main {
             HashMap<String, Object> model = new HashMap<>();
 
             String id = req.params("id");
-            
+
             model.put("tips", appLogic.retrieveTip(id));
             model.put("template", "templates/tip.html");
 

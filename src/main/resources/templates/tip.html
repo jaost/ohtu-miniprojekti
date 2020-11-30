@@ -3,9 +3,6 @@
 <form action="/" method="GET">
     <input type="submit" value="Return" />
 </form>
-#if ($tipDeleted)
-    <Strong>Tip has been deleted</Strong>
-  #end
 <ul>
     #foreach ( $tip in $tips )
     <br />
@@ -20,7 +17,7 @@
         <label for="note"> Note: </label>
         <input name="note" value="$tip.note" disabled="true" />
         <br />
-        #if ($type == "Book")
+        #if ($tip.type == "Book")
         <label for="author"> Author: </label>
         <input name="author" value="$tip.author" disabled="true" />
         <br />
@@ -30,11 +27,11 @@
         <label for="url"> URL: </label>
         <input name="url" value="$tip.url" disabled="true" />
         <br />
-        #elseif ($type == "Blogpost")
+        #elseif ($tip.type == "Blogpost")
         <label for="url"> URL: </label>
         <input name="url" value="$tip.url" disabled="true" />
         <br />
-        #elseif ($type == "Podcast")
+        #elseif ($tip.type == "Podcast")
         <label for="author"> Author: </label>
         <input name="author" value="$tip.author" disabled="true" />
         <br />
@@ -44,17 +41,19 @@
         <label for="url"> URL: </label>
         <input name="url" value="$tip.url" disabled="true" />
         <br />
-        #elseif ($type == "Videotip")
+        #elseif ($tip.type == "Video")
         <label for="url"> URL: </label>
         <input name="url" value="$tip.url" disabled="true" />
         <br />
         #end
+
         <input type="button" value="Edit" onclick="removeDisabled($tip.id)" />
-        <form action="/tips/$tip.id" method="PUT">
+        <form action="/tips/$tip.id" method="put">
             <input type="submit" value="Save" />
         </form>
+
     </form>
-    <form action="/tips/$tip.id" method="DELETE">
+    <form action="/tips/delete/$tip.id" method="GET">
         <input type="submit" value="Delete" />
     </form>
     <br />
