@@ -84,4 +84,9 @@ public class LogicTest {
         assertEquals(1, tipDao.deleteByID(0));
     }
     
+    @Test
+    public void tipIsDeletedByTitle() {
+        assertEquals(1, tipDao.deleteByTitle("testAuthor"));
+    }
+    
 }
