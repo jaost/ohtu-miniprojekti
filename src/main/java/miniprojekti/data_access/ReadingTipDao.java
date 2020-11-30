@@ -239,14 +239,43 @@ public class ReadingTipDao implements Dao {
     @Override
     public int deleteTip(Tip tip) {
         int rowsDeleted = 0;
-        try (Connection conn = database.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM tip WHERE id=?");
+        try (Connection conn = database.getConnection()) {      
+            PreparedStatement stmt;
+            switch (tip.getType()) {
+                case "Book":
+                    BookTip bookTip = (BookTip) tip;
+                    stmt = conn.prepareStatement("DELETE FROM book WHERE tip_id=?");
+                    stmt.setInt(1, bookTip.getTipId());
+                    rowsDeleted += stmt.executeUpdate();
+                    break;
+                case "Video":
+                    VideoTip videoTip = (VideoTip) tip;
+                    stmt = conn.prepareStatement("DELETE FROM video WHERE tip_id=?");
+                    stmt.setInt(1, videoTip.getTipId());
+                    rowsDeleted += stmt.executeUpdate();
+                    break;
+                case "Blogpost":
+                    BlogpostTip blogpostTip = (BlogpostTip) tip;
+                    stmt = conn.prepareStatement("DELETE FROM blogpost tip_id=?");
+                    stmt.setInt(1, blogpostTip.getTipId());
+                    rowsDeleted += stmt.executeUpdate();
+                    break;
+                case "Podcast":
+                    PodcastTip podcastTip = (PodcastTip) tip;
+                    stmt = conn.prepareStatement("DELETE FROM podcast WHERE tip_id=?");
+                    stmt.setInt(1, podcastTip.getTipId());
+                    rowsDeleted += stmt.executeUpdate();
+                    break;
+                default:
+                    break;
+            }
+            stmt = conn.prepareStatement("DELETE FROM tip WHERE id=?");
             stmt.setInt(1, tip.getTipId());
-            rowsDeleted = stmt.executeUpdate();
+            rowsDeleted += stmt.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
-            return -1;
         }
+        
         return rowsDeleted;
     }
     
