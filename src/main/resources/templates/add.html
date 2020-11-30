@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
   <h1>Add ${type}</h1>
-  <form action="/add/${type}" method="POST">
+  <form action="/add/${type}" id="addForm" method="POST">
      
     <p> Title: <input name="title"/></p>
     <p> Note: <input name="note"/></p>
@@ -15,9 +15,16 @@
     <p> Description: <input name="description"/></p>
     #end
 
-    <input type="submit" value="Add"/>
+    <input type="submit" value="Add" onclick="setUrl()"/>
   </form>
   
   <form action="/" method="GET">
       <input type="submit" value="Return"/>
   </form>
+  
+  <script>
+      function setUrl() {
+        var url = document.getElementById("addForm").getAttribute("action");
+      
+      }
+  </script>

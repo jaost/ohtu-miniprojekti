@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import miniprojekti.data_access.ReadingTipDao;
 import miniprojekti.database.Database;
 import miniprojekti.domain.Logic;
@@ -85,13 +86,14 @@ public class Main {
      * return new ModelAndView(model, LAYOUT); }, new VelocityTemplateEngine()); }
      */
     private static void postReadingTip() {
-        post("/", (req, res) -> {
+        post("/add/:type", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
-
-            // Ei toimi viel�
-            // appLogic.saveNewTip(req.queryParams("author"), req.queryParams("title"),
-            // req.queryParams("url"));
-
+            
+            Map<String, String> paramMap = getQueryParams(req);
+            paramMap.put("type", req.params("type"));
+            
+            appLogic.saveNewTip(paramMap);
+            
             model.put("template", "templates/index.html");
             model.put("tipAdded", "New tip added succesfully");
             model.put("tips", appLogic.retrieveAllTips());
@@ -145,4 +147,14 @@ public class Main {
         }
         return 4567;
     }
+    
+  private static Map<String, String> getQueryParams(Request request) {
+    final Map<String, String> paramMap = new HashMap<>();
+    
+    request.queryMap().toMap().forEach((key, value) -> {
+      paramMap.put(key, value[0]);
+    });
+    
+    return paramMap;
+  }
 }

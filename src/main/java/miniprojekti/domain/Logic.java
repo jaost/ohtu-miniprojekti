@@ -85,6 +85,8 @@ public class Logic {
     public void saveNewTip(Map<String, String> tipAttributes) {
         // T�m� talletetaan daossa
         Tip toSave = TipFactory.createTip(tipAttributes);
+        
+        readingTipDao.save(toSave);
     }
     
     public void deleteTipByID(int id) {
