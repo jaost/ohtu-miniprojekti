@@ -81,6 +81,7 @@ public class LogicTest {
     
     @Test
     public void tipIsDeletedByID() {
-        assertEquals(1, tipDao.deleteByID(1));
+        assertEquals(1, tipDao.deleteByID(0));
     }
+    
 }
