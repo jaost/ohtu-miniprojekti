@@ -1,5 +1,8 @@
 package miniprojekti.domain;
 
+import java.util.Map;
+import java.util.Set;
+
 public class BookTip extends Tip{
     
     private int id;
@@ -13,6 +16,10 @@ public class BookTip extends Tip{
         this.author = author;
         this.isbn = isbn;
         this.url = url;
+    }
+    
+    public static BookTip createBook(Map<String, String> attr) {
+        return new BookTip(0, attr.get("title"), attr.get("type"), attr.get("note"), 0, attr.get("author"), attr.get("isbn"), attr.get("url"));
     }
 
     public int getId() {

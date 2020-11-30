@@ -1,5 +1,7 @@
 package miniprojekti.domain;
 
+import java.util.Map;
+
 public class PodcastTip extends Tip{
     
     private int id;
@@ -13,6 +15,10 @@ public class PodcastTip extends Tip{
         this.author = author;
         this.description = description;
         this.url = url;
+    }
+    
+    public static PodcastTip createPodcastTip(Map<String, String> attr) {
+        return new PodcastTip(0, attr.get("title"), attr.get("type"), attr.get("note"), 0, attr.get("author"), attr.get("description"), attr.get("url"));
     }
 
     public int getId() {
