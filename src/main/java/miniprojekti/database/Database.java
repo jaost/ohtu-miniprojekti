@@ -36,21 +36,21 @@ public class Database {
                         + "	isbn VARCHAR(144),"
                         + "	url VARCHAR(144),"
                         + "	PRIMARY KEY (id),"
-                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id)"
+                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id) ON DELETE CASCADE"
                         + ")");
                 s.execute("CREATE TABLE IF NOT EXISTS video ("
                         + "	id INTEGER NOT NULL,"
                         + "	tip_id INTEGER NOT NULL,"
                         + "	url VARCHAR(144),"
                         + "	PRIMARY KEY (id),"
-                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id)"
+                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id) ON DELETE CASCADE"
                         + ")");
                 s.execute("CREATE TABLE IF NOT EXISTS blogpost ("
                         + "	id INTEGER NOT NULL,"
                         + "	tip_id INTEGER NOT NULL,"
                         + "	url VARCHAR(144),"
                         + "	PRIMARY KEY (id),"
-                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id)"
+                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id) ON DELETE CASCADE"
                         + ")");
                 s.execute("CREATE TABLE IF NOT EXISTS podcast ("
                         + "	id INTEGER NOT NULL,"
@@ -59,7 +59,7 @@ public class Database {
                         + "	description VARCHAR(144),"
                         + "	url VARCHAR(144),"
                         + "	PRIMARY KEY (id),"
-                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id)"
+                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id) ON DELETE CASCADE"
                         + ")");
             } else {
                 s.execute("CREATE TABLE IF NOT EXISTS readingtip "
@@ -79,19 +79,19 @@ public class Database {
                         + "	author VARCHAR(255),"
                         + "	isbn VARCHAR(255),"
                         + "	url VARCHAR(255),"
-                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id)"
+                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id) ON DELETE CASCADE"
                         + ")");
                 s.execute("CREATE TABLE IF NOT EXISTS video ("
                         + "	id SERIAL PRIMARY KEY,"
                         + "	tip_id INT NOT NULL,"
                         + "	url VARCHAR(255),"
-                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id)"
+                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id) ON DELETE CASCADE"
                         + ")");
                 s.execute("CREATE TABLE IF NOT EXISTS blogpost ("
                         + "	id SERIAL PRIMARY KEY,"
                         + "	tip_id INT NOT NULL,"
                         + "	url VARCHAR(255),"
-                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id)"
+                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id) ON DELETE CASCADE"
                         + ")");
                 s.execute("CREATE TABLE IF NOT EXISTS podcast ("
                         + "	id SERIAL PRIMARY KEY,"
@@ -99,7 +99,7 @@ public class Database {
                         + "	author VARCHAR(255),"
                         + "	description VARCHAR(255),"
                         + "	url VARCHAR(255),"
-                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id)"
+                        + "	FOREIGN KEY(tip_id) REFERENCES tip (id) ON DELETE CASCADE"
                         + ")");
             }
 
