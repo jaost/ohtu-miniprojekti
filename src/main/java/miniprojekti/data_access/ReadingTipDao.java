@@ -44,6 +44,80 @@ public class ReadingTipDao implements Dao {
         return readingTips;
     }
     
+    public List<Tip> findAll_() {
+        List<Tip> tips = new ArrayList<>();
+        try (Connection conn = database.getConnection()) {
+            ResultSet result = conn.prepareStatement("SELECT id, title, type, note FROM tip").executeQuery();
+            while (result.next()) {
+                PreparedStatement stmt;
+                ResultSet rs;
+                switch (result.getString("type")) {
+                    case "Book":
+                        stmt  = conn.prepareStatement("SELECT id, author, isbn, url FROM book WHERE tip_id = ?");
+                        stmt.setInt(1, result.getInt("id"));
+                        rs = stmt.executeQuery();
+                        tips.add(new BookTip(
+                                result.getInt("id"), 
+                                result.getString("title"), 
+                                result.getString("type"),
+                                result.getString("note"),
+                                rs.getInt("id"),
+                                rs.getString("author"),
+                                rs.getString("isbn"),
+                                rs.getString("url")
+                        ));
+                        break;
+                    case "Video":
+                        stmt  = conn.prepareStatement("SELECT id, url FROM video WHERE tip_id = ?");
+                        stmt.setInt(1, result.getInt("id"));
+                        rs = stmt.executeQuery();
+                        tips.add(new VideoTip(
+                                result.getInt("id"), 
+                                result.getString("title"), 
+                                result.getString("type"),
+                                result.getString("note"),
+                                rs.getInt("id"),
+                                rs.getString("url")
+                        ));
+                        break;
+                    case "Blogpost":
+                        stmt  = conn.prepareStatement("SELECT id, url FROM blogpost WHERE tip_id = ?");
+                        stmt.setInt(1, result.getInt("id"));
+                        rs = stmt.executeQuery();
+                        tips.add(new BlogpostTip(
+                                result.getInt("id"), 
+                                result.getString("title"), 
+                                result.getString("type"),
+                                result.getString("note"),
+                                rs.getInt("id"),
+                                rs.getString("url")
+                        ));
+                        break;
+                    case "Podcast":
+                        stmt  = conn.prepareStatement("SELECT id, author, description, url FROM podcast WHERE tip_id = ?");
+                        stmt.setInt(1, result.getInt("id"));
+                        rs = stmt.executeQuery();
+                        tips.add(new PodcastTip(
+                                result.getInt("id"), 
+                                result.getString("title"), 
+                                result.getString("type"),
+                                result.getString("note"),
+                                rs.getInt("id"),
+                                rs.getString("author"),
+                                rs.getString("description"),
+                                rs.getString("url")
+                        ));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return tips;
+    }
+    
     public void save(Tip tip) {
         try (Connection conn = database.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO tip (title, type, note) "
