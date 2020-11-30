@@ -3,11 +3,16 @@ package miniprojekti.data_access;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import miniprojekti.database.Database;
+import miniprojekti.domain.BlogpostTip;
+import miniprojekti.domain.BookTip;
+import miniprojekti.domain.PodcastTip;
 import miniprojekti.domain.ReadingTip;
+import miniprojekti.domain.Tip;
+import miniprojekti.domain.VideoTip;
 
 public class ReadingTipDao implements Dao {
     
@@ -37,6 +42,72 @@ public class ReadingTipDao implements Dao {
             
         }
         return readingTips;
+    }
+    
+    public void save(Tip tip) {
+        try (Connection conn = database.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO tip (title, type, note) "
+                    + "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, tip.getTitle());
+            stmt.setString(2, tip.getType());
+            stmt.setString(3, tip.getNote());
+            stmt.executeUpdate();
+            
+            int tipId = 0;
+            
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    tipId = (int)generatedKeys.getLong(1);
+                }
+                else {
+                    return;
+                }
+            }
+            
+            switch (tip.getType()) {
+                case "Book":
+                    BookTip bookTip = (BookTip) tip;
+                    stmt = conn.prepareStatement("INSERT INTO book (tip_id, author, isbn, url) "
+                            + "VALUES (?, ?, ?, ?)");
+                    stmt.setInt(1, tipId);
+                    stmt.setString(2, bookTip.getAuthor());
+                    stmt.setString(3, bookTip.getIsbn());
+                    stmt.setString(4, bookTip.getUrl());
+                    stmt.executeUpdate();
+                    break;
+                case "Video":
+                    VideoTip videoTip = (VideoTip) tip;
+                    stmt = conn.prepareStatement("INSERT INTO video (tip_id, url) "
+                            + "VALUES (?, ?)");
+                    stmt.setInt(1, tipId);
+                    stmt.setString(2, videoTip.getUrl());
+                    stmt.executeUpdate();
+                    break;
+                case "Blogpost":
+                    BlogpostTip blogpostTip = (BlogpostTip) tip;
+                    stmt = conn.prepareStatement("INSERT INTO blogpost (tip_id, url) "
+                            + "VALUES (?, ?)");
+                    stmt.setInt(1, tipId);
+                    stmt.setString(2, blogpostTip.getUrl());
+                    stmt.executeUpdate();
+                    break;
+                case "Podcast":
+                    PodcastTip podcastTip = (PodcastTip) tip;
+                    stmt = conn.prepareStatement("INSERT INTO podcast (tip_id, author, description, url) "
+                            + "VALUES (?, ?, ?, ?)");
+                    stmt.setInt(1, tipId);
+                    stmt.setString(2, podcastTip.getAuthor());
+                    stmt.setString(3, podcastTip.getDescription());
+                    stmt.setString(4, podcastTip.getUrl());
+                    stmt.executeUpdate();
+                    break;
+                default:
+                    break;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     
     @Override

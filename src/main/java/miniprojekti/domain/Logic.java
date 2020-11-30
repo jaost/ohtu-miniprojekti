@@ -65,7 +65,7 @@ public class Logic {
     
     
     public void saveNewTip(Map<String, String> tipAttributes) {
-        // Tämä talletetaan daossa
+        // Tï¿½mï¿½ talletetaan daossa
         Tip toSave = TipFactory.createTip(tipAttributes);
     }
     

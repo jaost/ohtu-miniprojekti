@@ -69,7 +69,7 @@ public class Database {
                         + "url VARCHAR(255))");
                 s.execute("CREATE TABLE IF NOT EXISTS tip ("
                         + "	id SERIAL PRIMARY KEY,"
-                        + "	otsikko VARCHAR(255),"
+                        + "	title VARCHAR(255),"
                         + "	type VARCHAR(255),"
                         + "	note VARCHAR(255)"
                         + ")");
