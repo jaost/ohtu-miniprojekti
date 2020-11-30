@@ -56,6 +56,7 @@ public class ReadingTipDao implements Dao {
                         stmt  = conn.prepareStatement("SELECT id, author, isbn, url FROM book WHERE tip_id = ?");
                         stmt.setInt(1, result.getInt("id"));
                         rs = stmt.executeQuery();
+                        rs.next();
                         tips.add(new BookTip(
                                 result.getInt("id"), 
                                 result.getString("title"), 
@@ -70,6 +71,7 @@ public class ReadingTipDao implements Dao {
                         stmt  = conn.prepareStatement("SELECT id, url FROM video WHERE tip_id = ?");
                         stmt.setInt(1, result.getInt("id"));
                         rs = stmt.executeQuery();
+                        rs.next();
                         tips.add(new VideoTip(
                                 result.getInt("id"), 
                                 result.getString("title"), 
@@ -82,6 +84,7 @@ public class ReadingTipDao implements Dao {
                         stmt  = conn.prepareStatement("SELECT id, url FROM blogpost WHERE tip_id = ?");
                         stmt.setInt(1, result.getInt("id"));
                         rs = stmt.executeQuery();
+                        rs.next();
                         tips.add(new BlogpostTip(
                                 result.getInt("id"), 
                                 result.getString("title"), 
@@ -94,6 +97,7 @@ public class ReadingTipDao implements Dao {
                         stmt  = conn.prepareStatement("SELECT id, author, description, url FROM podcast WHERE tip_id = ?");
                         stmt.setInt(1, result.getInt("id"));
                         rs = stmt.executeQuery();
+                        rs.next();
                         tips.add(new PodcastTip(
                                 result.getInt("id"), 
                                 result.getString("title"), 
