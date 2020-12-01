@@ -47,8 +47,8 @@ public class LogicTest {
         verify(testDao).save(any(BookTip.class));
     }
     
-        @Test
-    public void newPodcastTipIsSaved() { // (int tipId, String title, String note, int id, String author, String description, String url)
+    @Test
+    public void newPodcastTipIsSaved() {
         Logic l = new Logic(testDao);
         HashMap<String, String> tipMap = new HashMap<>();
         tipMap.put("id", "0");
@@ -61,6 +61,33 @@ public class LogicTest {
         l.saveNewTip(tipMap);
         verify(testDao).save(any(PodcastTip.class));
     }
+    
+    @Test
+    public void newVideoTipIsSaved() { 
+        Logic l = new Logic(testDao);
+        HashMap<String, String> tipMap = new HashMap<>();
+        tipMap.put("id", "1");
+        tipMap.put("title", "title");
+        tipMap.put("note", "note");
+        tipMap.put("type", "video");
+        tipMap.put("url", "url");
+        l.saveNewTip(tipMap); // nullpointerexception
+        verify(testDao).save(any(VideoTip.class));
+    }
+    
+    @Test
+    public void newBlopostTipIsSaved() {
+        Logic l = new Logic(testDao);
+        HashMap<String, String> tipMap = new HashMap<>();
+        tipMap.put("id", "1");
+        tipMap.put("title", "title");
+        tipMap.put("type", "blogpost");
+        tipMap.put("note", "note");
+        tipMap.put("url", "url");
+        l.saveNewTip(tipMap); // nullpointerexception
+        verify(testDao).save(any(BlogpostTip.class));
+    }
+    
     /*
     @Test
     public void tipIsDeletedByID() {
