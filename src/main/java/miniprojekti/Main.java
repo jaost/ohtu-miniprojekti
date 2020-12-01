@@ -7,8 +7,14 @@ import java.util.List;
 import java.util.Map;
 import miniprojekti.data_access.ReadingTipDao;
 import miniprojekti.database.Database;
+import miniprojekti.domain.BlogpostTip;
+import miniprojekti.domain.BookTip;
 import miniprojekti.domain.Logic;
+import miniprojekti.domain.PodcastTip;
 import miniprojekti.domain.ReadingTip;
+import miniprojekti.domain.Tip;
+import miniprojekti.domain.TipFactory;
+import miniprojekti.domain.VideoTip;
 import spark.ModelAndView;
 import spark.Redirect;
 import spark.Request;
@@ -29,14 +35,13 @@ public class Main {
 
     public static void main(String[] args) {
         Spark.port(portSelection());
-
         getIndexPage();
         postReadingTip();
         getReadingTipsPage();
         addReadingTipPage();
         singleTipPage();
         deleteTip();
-        // editTip();
+        editTip();
     }
 
     private static void getIndexPage() {
@@ -63,28 +68,42 @@ public class Main {
         }, new VelocityTemplateEngine());
     }
 
-    /*
-     * private static void editTip() { put("/tips/:id", (req, res) -> {
-     * HashMap<String, Object> model = new HashMap<>(); model.put("template",
-     * "templates/index.html"); String type = req.queryParams("type"); String title
-     * = req.queryParams("title"); String note = req.queryParams("note"); String url
-     * = req.queryParams("url"); String author = ""; int id =
-     * Integer.parseInt(req.queryParams("id"));
-     * 
-     * switch (type) { case "Book": author = req.queryParams("author"); String isbn
-     * = req.queryParams("isbn"); model.put("editedTip", appLogic.updateTip(id,
-     * type, title, note, url, author, isbn)); break;
-     * 
-     * case "Video": model.put("editedTip", appLogic.updateTip(id, type, title,
-     * note, url)); break;
-     * 
-     * case "Podcast": author = req.queryParams("author"); model.put("editedTip",
-     * appLogic.updateTip(id, type, title, note, url, author)); break; case
-     * "Blogpost": model.put("editedTip", appLogic.updateTip(id, type, title, note,
-     * url)); break; default: break; }
-     * 
-     * return new ModelAndView(model, LAYOUT); }, new VelocityTemplateEngine()); }
-     */
+    
+    private static void editTip() { 
+        post("/tips/:id", (req, res) -> {
+            HashMap<String, Object> model = new HashMap<>(); 
+            model.put("template", "templates/index.html");
+        
+            String type = req.queryParams("type"); 
+            int id = Integer.parseInt(req.params(":id"));
+            Tip tip;
+            switch (type) { 
+            case "Book": 
+                tip = new BookTip(id, req.queryParams("title"), req.queryParams("note"), 0, req.queryParams("author"), req.queryParams("isbn"), req.queryParams("url"));
+                appLogic.updateTip(tip);
+                break;
+            case "Video": 
+                tip = new VideoTip(id, req.queryParams("title"), req.queryParams("note"), 0, req.queryParams("url"));
+                appLogic.updateTip(tip);
+                break;
+            case "Podcast": 
+                tip = new PodcastTip(id, req.queryParams("title"), req.queryParams("note"), 0, req.queryParams("author"), req.queryParams("description"), req.queryParams("url"));
+                appLogic.updateTip(tip);
+                break;
+            case "Blogpost": 
+                tip = new BlogpostTip(id, req.queryParams("title"), req.queryParams("note"), 0, req.queryParams("url"));
+                appLogic.updateTip(tip);
+                break;
+            default: 
+                break; 
+            }
+            
+            model.put("editedTip", "Tip updated!");
+            model.put("tips", appLogic.retrieveAllTips());
+            return new ModelAndView(model, LAYOUT);
+        }, new VelocityTemplateEngine());
+    }
+    
     private static void postReadingTip() {
         post("/add/:type", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.net.URI; 
 import java.net.URISyntaxException;
 import java.sql.Statement;
+import org.sqlite.SQLiteConfig;
 
 public class Database {
     
@@ -125,6 +126,14 @@ public class Database {
             return DriverManager.getConnection(dbUrl, username, password);
         }
         this.isLocal = true;
-        return DriverManager.getConnection(databaseAddress);
+        Connection connection = null;
+        try {
+            SQLiteConfig config = new SQLiteConfig();
+            config.enforceForeignKeys(true);
+            connection = DriverManager.getConnection(databaseAddress, config.toProperties());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return connection;
     }
 }

@@ -6,7 +6,7 @@
 <ul>
     #foreach ( $tip in $tips )
     <br />
-    <form name="$tip.id" action="/tips/$tip.id" method="PUT" id="$tip.id">
+    <form action="/tips/$tip.id" method="POST" id="$tip.id">
 
         <label for="title"> Title: </label>
         <input name="title" value="$tip.title" disabled="true" />
@@ -48,9 +48,7 @@
         #end
 
         <input type="button" value="Edit" onclick="removeDisabled($tip.id)" />
-        <form action="/tips/$tip.id" method="put">
-            <input type="submit" value="Save" />
-        </form>
+        <input type="submit" value="Save" />
 
     </form>
     <form action="/tips/delete/$tip.id" method="GET">
