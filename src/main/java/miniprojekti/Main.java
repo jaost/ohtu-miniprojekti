@@ -118,8 +118,7 @@ public class Main {
         get("/tips/:id", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
 
-            String id = req.params("id");
-
+            String id = req.params(":id");
             model.put("tips", appLogic.retrieveTip(id));
             model.put("template", "templates/tip.html");
 
