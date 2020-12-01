@@ -38,15 +38,15 @@ public class Logic {
     }
 
     public List<HashMap<String, String>> retrieveTip(String s) {
-        int id = Integer.parseInt(s) - 1;
-        Tip tip = readingTipDao.findAll_().get(id);
+        int id = Integer.parseInt(s);
+        Tip tip = readingTipDao.findAll_().get(id-1);
         ArrayList<HashMap<String, String>> modelTips = new ArrayList<>();
         HashMap<String, String> tipMap = new HashMap<>();
 
         switch (tip.getType()) {
             case "Book":
                 BookTip booktip = (BookTip) tip;
-                tipMap.put("id", String.valueOf(booktip.getTipId()));
+                tipMap.put("id", s);
                 tipMap.put("title", booktip.getTitle());
                 tipMap.put("type", booktip.getType());
                 tipMap.put("note", booktip.getNote());
@@ -56,7 +56,7 @@ public class Logic {
                 break;
                 case "Video":
                 VideoTip videotip = (VideoTip) tip;
-                tipMap.put("id", String.valueOf(videotip.getTipId()));
+                tipMap.put("id", s);
                 tipMap.put("title", videotip.getTitle());
                 tipMap.put("type", videotip.getType());
                 tipMap.put("note", videotip.getNote());
@@ -64,7 +64,7 @@ public class Logic {
                 break;
                 case "Blogpost":
                 BlogpostTip blogposttip = (BlogpostTip) tip;
-                tipMap.put("id", String.valueOf(blogposttip.getTipId()));
+                tipMap.put("id", s);
                 tipMap.put("title", blogposttip.getTitle());
                 tipMap.put("type", blogposttip.getType());
                 tipMap.put("note", blogposttip.getNote());
@@ -72,7 +72,7 @@ public class Logic {
                 break;
                 case "Podcast":
                 PodcastTip podcasttip = (PodcastTip) tip;
-                tipMap.put("id", String.valueOf(podcasttip.getTipId()));
+                tipMap.put("id", s);
                 tipMap.put("title", podcasttip.getTitle());
                 tipMap.put("type", podcasttip.getType());
                 tipMap.put("note", podcasttip.getNote());
