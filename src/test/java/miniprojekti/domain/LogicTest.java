@@ -47,6 +47,18 @@ public class LogicTest {
     }
     
     @Test
+    public void tipsRetrievedByAuthor(){
+        l.retrieveAllTipsByAuthor("author");
+        verify(testDao).findAll();
+    }
+    
+    @Test
+    public void allTipsRetrieved(){
+        l.retrieveAllTips();
+        verify(testDao).findAll_();
+    }
+    
+    @Test
     public void newPodcastTipIsSaved() {
         HashMap<String, String> tipMap = new HashMap<>();
         tipMap.put("id", "0");
@@ -84,12 +96,13 @@ public class LogicTest {
         verify(testDao).save(any(BlogpostTip.class));
     }
    
-    /*
+
     @Test
     public void tipIsDeletedByID() {
-        assertEquals(1, tipDao.deleteByID(0));
-    } */
-    
+        l.deleteTipByID(0);
+        verify(testDao).deleteByID(0);
+    }
+
     @Test
     public void tipIsDeletedByTitle() {
         String title = "title";
