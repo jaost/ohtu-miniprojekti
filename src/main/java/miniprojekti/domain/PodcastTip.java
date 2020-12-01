@@ -9,8 +9,8 @@ public class PodcastTip extends Tip{
     private String description;
     private String url;
     
-    public PodcastTip(int tipId, String title, String type, String note, int id, String author, String description, String url) {
-        super(tipId, title, type, note);
+    public PodcastTip(int tipId, String title, String note, int id, String author, String description, String url) {
+        super(tipId, title, "Podcast", note);
         this.id = id;
         this.author = author;
         this.description = description;
@@ -18,7 +18,7 @@ public class PodcastTip extends Tip{
     }
     
     public static PodcastTip createPodcastTip(Map<String, String> attr) {
-        return new PodcastTip(0, attr.get("title"), attr.get("type"), attr.get("note"), 0, attr.get("author"), attr.get("description"), attr.get("url"));
+        return new PodcastTip(0, attr.get("title"), attr.get("note"), 0, attr.get("author"), attr.get("description"), attr.get("url"));
     }
 
     public int getId() {
