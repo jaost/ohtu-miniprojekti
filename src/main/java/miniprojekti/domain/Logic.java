@@ -23,12 +23,17 @@ public class Logic {
     public List<HashMap<String, String>> retrieveAllTips() {
         List<Tip> tips = readingTipDao.findAll_();
         ArrayList<HashMap<String, String>> modelTips = new ArrayList<>();
+        
         for (Tip tip : tips) {
             HashMap<String, String> tipMap = new HashMap<>();
+            
             tipMap.put("id", String.valueOf(tip.getTipId()));
             tipMap.put("title", tip.getTitle());
             tipMap.put("type", tip.getType());
             tipMap.put("note", tip.getNote());
+            
+            addTypeSpecificParameters(tipMap, tip);
+            
             modelTips.add(tipMap);
         }
 
@@ -128,6 +133,30 @@ public class Logic {
     public void updateTip(Tip tip) {
         int rowsDeleted = readingTipDao.updateTip(tip);
         System.out.println("Updated " + rowsDeleted + " rows.");
+    }
+    
+    private void addTypeSpecificParameters(HashMap<String, String> tipMap, Tip tip) {
+        if (tip.getType().equals("Book")) {
+            BookTip book = (BookTip) tip;
+            
+            tipMap.put("author", book.getAuthor());
+            tipMap.put("isbn", book.getIsbn());
+            tipMap.put("url", book.getUrl());
+        } else if (tip.getType().equals("Podcast")) {
+            PodcastTip podc = (PodcastTip) tip;
+            
+            tipMap.put("author", podc.getAuthor());
+            tipMap.put("description", podc.getDescription());
+            tipMap.put("url", podc.getUrl());
+        } else if (tip.getType().equals("Video")) {
+            VideoTip vid = (VideoTip) tip;
+            
+            tipMap.put("url", vid.getUrl());
+        } else {
+            BlogpostTip blogp = (BlogpostTip) tip;
+            
+            tipMap.put("url", blogp.getUrl());
+        }
     }
 
 }

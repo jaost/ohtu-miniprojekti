@@ -25,6 +25,19 @@
           <li> Type: $tip.type</li>
           <li> Title : $tip.title</li>
           <li> Note: $tip.note</li>
+          
+          #if ($tip.type == "Book")
+            <li> Author: $tip.author</li>
+            <li> ISBN: $tip.isbn</li>
+          #elseif ($tip.type == "Podcast")
+            <li> Author: $tip.author</li>
+            <li> Description: $tip.description</li>
+            <li> URL: $tip.url</li>
+          #elseif ($tip.type == "Blogpost")
+            <li> URL: $tip.url</li>
+          #elseif ($tip.type == "Video")
+            <li> URL: $tip.url</li>
+          #end
           <form action="/tips/$tip.id" method="GET">
             <input type="submit" value="Open" /></form>
           <br/>
