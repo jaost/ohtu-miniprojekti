@@ -34,7 +34,6 @@ public class LogicTest {
 
     @Test
     public void newBookTipIsSaved() {
-        Logic l = new Logic(testDao);
         HashMap<String, String> tipMap = new HashMap<>();
         tipMap.put("id", "0");
         tipMap.put("title", "title");
@@ -49,7 +48,6 @@ public class LogicTest {
     
     @Test
     public void newPodcastTipIsSaved() {
-        Logic l = new Logic(testDao);
         HashMap<String, String> tipMap = new HashMap<>();
         tipMap.put("id", "0");
         tipMap.put("title", "title");
@@ -61,46 +59,43 @@ public class LogicTest {
         l.saveNewTip(tipMap);
         verify(testDao).save(any(PodcastTip.class));
     }
-    
+
     @Test
     public void newVideoTipIsSaved() { 
-        Logic l = new Logic(testDao);
         HashMap<String, String> tipMap = new HashMap<>();
         tipMap.put("id", "1");
         tipMap.put("title", "title");
         tipMap.put("note", "note");
         tipMap.put("type", "video");
         tipMap.put("url", "url");
-        l.saveNewTip(tipMap); // nullpointerexception
+        l.saveNewTip(tipMap);
         verify(testDao).save(any(VideoTip.class));
     }
-    
+
     @Test
     public void newBlopostTipIsSaved() {
-        Logic l = new Logic(testDao);
         HashMap<String, String> tipMap = new HashMap<>();
         tipMap.put("id", "1");
         tipMap.put("title", "title");
         tipMap.put("type", "blogpost");
         tipMap.put("note", "note");
         tipMap.put("url", "url");
-        l.saveNewTip(tipMap); // nullpointerexception
+        l.saveNewTip(tipMap);
         verify(testDao).save(any(BlogpostTip.class));
     }
-    
+   
     /*
     @Test
     public void tipIsDeletedByID() {
         assertEquals(1, tipDao.deleteByID(0));
-    }
+    } */
     
     @Test
     public void tipIsDeletedByTitle() {
-        assertEquals(1, tipDao.deleteByTitle("testAuthor"));
+        String title = "title";
+        l.deleteTipByTitle(title);
+        verify(testDao).deleteByTitle(title);
     }
-    
-    @Test
-    public void tipIsUpdated() { 
-    } */
+
     
 }
