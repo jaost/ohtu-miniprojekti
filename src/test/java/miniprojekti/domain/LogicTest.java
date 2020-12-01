@@ -2,8 +2,8 @@ package miniprojekti.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import miniprojekti.data_access.Dao;
-import miniprojekti.data_access.ReadingTipDao;
+import miniprojekti.data_access.*;
+import miniprojekti.domain.*;
 import org.junit.*;
 import org.mockito.Matchers;
 
@@ -69,8 +69,9 @@ public class LogicTest {
     @Test
     public void newTipIsSaved() {
         Logic l = new Logic(testDao);
-        testDao.save("testAuthor", "testTitle", "testUrl");
-        verify(testDao).save(eq("testAuthor"), eq("testTitle"), eq("testUrl"));
+        BookTip tip = new BookTip(0, "title", "note", 0, "author", "isbn", "url");
+        testDao.save(tip);
+        verify(testDao).save(tip);
     }
 
     
