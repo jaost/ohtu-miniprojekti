@@ -111,15 +111,8 @@ public class Logic {
         return modelTips;
     }
 
-    /*
-     * public void saveNewTip(String author, String title, String url) {
-     * readingTipDao.save(author, title, url); }
-     */
-
     public void saveNewTip(Map<String, String> tipAttributes) {
-        // T�m� talletetaan daossa
         Tip toSave = TipFactory.createTip(tipAttributes);
-
         readingTipDao.save(toSave);
     }
 

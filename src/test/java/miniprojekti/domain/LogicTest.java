@@ -1,9 +1,10 @@
 package miniprojekti.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import miniprojekti.data_access.*;
-import miniprojekti.domain.*;
+import miniprojekti.domain.TipFactory;
 import org.junit.*;
 import org.mockito.Matchers;
 
@@ -11,9 +12,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
+import org.mockito.stubbing.OngoingStubbing;
 
 public class LogicTest {
     ReadingTipDao testDao;
+    TipFactory tipFactory;
 
     Dao tipDao = new Dao() {
         public List<ReadingTip> testTips = new ArrayList<>();
@@ -64,14 +67,27 @@ public class LogicTest {
     @Before
     public void setUp() {
         testDao = mock(ReadingTipDao.class);
+        tipFactory = mock(TipFactory.class);
+    }
+    
+    @After
+    public void validate() {
+        validateMockitoUsage();
     }
 
     @Test
-    public void newTipIsSaved() {
+    public void newBookTipIsSaved() {
         Logic l = new Logic(testDao);
-        BookTip tip = new BookTip(0, "title", "note", 0, "author", "isbn", "url");
-        testDao.save(tip);
-        verify(testDao).save(tip);
+        HashMap<String, String> tipMap = new HashMap<>();
+        tipMap.put("id", "0");
+        tipMap.put("title", "title");
+        tipMap.put("type", "book");
+        tipMap.put("note", "note");
+        tipMap.put("author", "author");
+        tipMap.put("isbn", "isbn");
+        tipMap.put("url", "url");
+        l.saveNewTip(tipMap);
+        verify(testDao).save(any(BookTip.class));
     }
 
     
