@@ -46,6 +46,21 @@ public class LogicTest {
         l.saveNewTip(tipMap);
         verify(testDao).save(any(BookTip.class));
     }
+    
+        @Test
+    public void newPodcastTipIsSaved() { // (int tipId, String title, String note, int id, String author, String description, String url)
+        Logic l = new Logic(testDao);
+        HashMap<String, String> tipMap = new HashMap<>();
+        tipMap.put("id", "0");
+        tipMap.put("title", "title");
+        tipMap.put("note", "note");
+        tipMap.put("author", "author");
+        tipMap.put("type", "podcast");
+        tipMap.put("description", "description");
+        tipMap.put("url", "url");
+        l.saveNewTip(tipMap);
+        verify(testDao).save(any(PodcastTip.class));
+    }
     /*
     @Test
     public void tipIsDeletedByID() {
@@ -58,8 +73,7 @@ public class LogicTest {
     }
     
     @Test
-    public void tipIsUpdated() {
-        
+    public void tipIsUpdated() { 
     } */
     
 }
