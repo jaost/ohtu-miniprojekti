@@ -1,18 +1,10 @@
 package miniprojekti.domain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import miniprojekti.data_access.*;
-import miniprojekti.domain.TipFactory;
 import org.junit.*;
-import org.mockito.Matchers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
-import org.mockito.stubbing.OngoingStubbing;
 
 public class LogicTest {
     ReadingTipDao testDao;
@@ -45,7 +37,7 @@ public class LogicTest {
         l.saveNewTip(tipMap);
         verify(testDao).save(any(BookTip.class));
     }
-    
+
     @Test
     public void tipsRetrievedByAuthor(){
         l.retrieveAllTipsByAuthor("author");
@@ -57,7 +49,7 @@ public class LogicTest {
         l.retrieveAllTips();
         verify(testDao).findAll_();
     }
-    
+
     @Test
     public void newPodcastTipIsSaved() {
         HashMap<String, String> tipMap = new HashMap<>();
