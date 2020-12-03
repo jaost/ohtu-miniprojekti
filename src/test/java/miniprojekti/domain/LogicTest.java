@@ -37,12 +37,6 @@ public class LogicTest {
         l.saveNewTip(tipMap);
         verify(testDao).save(any(BookTip.class));
     }
-
-    @Test
-    public void tipsRetrievedByAuthor(){
-        l.retrieveAllTipsByAuthor("author");
-        verify(testDao).findAll();
-    }
     
     @Test
     public void allTipsRetrieved(){
