@@ -21,6 +21,18 @@
   <br/>
   
   <h1>Reading tips</h1>
+
+  <form action="/" method="GET">
+    <select name="typesToShow">
+        <option value="All">All</option>
+        <option value="Book">Book</option>
+        <option value="Video">Video</option>
+        <option value="Podcast">Podcast</option>
+        <option value="Blogpost">Blogpost</option>
+    </select>
+    <br/>
+    <input type="submit" value="Show tips"/>
+</form>
     <ul>
         #foreach ( $tip in $tips )
           <br/>

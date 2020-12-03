@@ -47,12 +47,21 @@ public class Main {
     private static void getIndexPage() {
         get("/", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
+            String types = "All";
+            try {
+                String query = req.queryParams("typesToShow");
+                if (!query.isEmpty()) {
+                    types = query;
+                }
+            } catch (Exception e) {
+            }
 
             model.put("template", "templates/index.html");
-            model.put("tips", appLogic.retrieveAllTips());
-
+            model.put("tips", appLogic.retrieveAllTipsByType(types));
+            
             return new ModelAndView(model, LAYOUT);
-        }, new VelocityTemplateEngine());
+        },new VelocityTemplateEngine());
+
     }
 
     private static void deleteTip() {
@@ -68,51 +77,54 @@ public class Main {
         }, new VelocityTemplateEngine());
     }
 
-    
-    private static void editTip() { 
+    private static void editTip() {
         post("/tips/:id", (req, res) -> {
-            HashMap<String, Object> model = new HashMap<>(); 
+            HashMap<String, Object> model = new HashMap<>();
             model.put("template", "templates/index.html");
-        
-            String type = req.queryParams("type"); 
+
+            String type = req.queryParams("type");
             int id = Integer.parseInt(req.params(":id"));
             Tip tip;
-            switch (type) { 
-            case "Book": 
-                tip = new BookTip(id, req.queryParams("title"), req.queryParams("note"), 0, req.queryParams("author"), req.queryParams("isbn"), req.queryParams("url"));
-                appLogic.updateTip(tip);
-                break;
-            case "Video": 
-                tip = new VideoTip(id, req.queryParams("title"), req.queryParams("note"), 0, req.queryParams("url"));
-                appLogic.updateTip(tip);
-                break;
-            case "Podcast": 
-                tip = new PodcastTip(id, req.queryParams("title"), req.queryParams("note"), 0, req.queryParams("author"), req.queryParams("description"), req.queryParams("url"));
-                appLogic.updateTip(tip);
-                break;
-            case "Blogpost": 
-                tip = new BlogpostTip(id, req.queryParams("title"), req.queryParams("note"), 0, req.queryParams("url"));
-                appLogic.updateTip(tip);
-                break;
-            default: 
-                break; 
+            switch (type) {
+                case "Book":
+                    tip = new BookTip(id, req.queryParams("title"), req.queryParams("note"), 0,
+                            req.queryParams("author"), req.queryParams("isbn"), req.queryParams("url"));
+                    appLogic.updateTip(tip);
+                    break;
+                case "Video":
+                    tip = new VideoTip(id, req.queryParams("title"), req.queryParams("note"), 0,
+                            req.queryParams("url"));
+                    appLogic.updateTip(tip);
+                    break;
+                case "Podcast":
+                    tip = new PodcastTip(id, req.queryParams("title"), req.queryParams("note"), 0,
+                            req.queryParams("author"), req.queryParams("description"), req.queryParams("url"));
+                    appLogic.updateTip(tip);
+                    break;
+                case "Blogpost":
+                    tip = new BlogpostTip(id, req.queryParams("title"), req.queryParams("note"), 0,
+                            req.queryParams("url"));
+                    appLogic.updateTip(tip);
+                    break;
+                default:
+                    break;
             }
-            
+
             model.put("editedTip", "Tip updated!");
             model.put("tips", appLogic.retrieveAllTips());
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
     }
-    
+
     private static void postReadingTip() {
         post("/add/:type", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
-            
+
             Map<String, String> paramMap = getQueryParams(req);
             paramMap.put("type", req.params("type"));
-            
+
             appLogic.saveNewTip(paramMap);
-            
+
             model.put("template", "templates/index.html");
             model.put("tipAdded", "New tip added succesfully");
             model.put("tips", appLogic.retrieveAllTips());
@@ -165,14 +177,14 @@ public class Main {
         }
         return 4567;
     }
-    
-  private static Map<String, String> getQueryParams(Request request) {
-    final Map<String, String> paramMap = new HashMap<>();
-    
-    request.queryMap().toMap().forEach((key, value) -> {
-      paramMap.put(key, value[0]);
-    });
-    
-    return paramMap;
-  }
+
+    private static Map<String, String> getQueryParams(Request request) {
+        final Map<String, String> paramMap = new HashMap<>();
+
+        request.queryMap().toMap().forEach((key, value) -> {
+            paramMap.put(key, value[0]);
+        });
+
+        return paramMap;
+    }
 }
