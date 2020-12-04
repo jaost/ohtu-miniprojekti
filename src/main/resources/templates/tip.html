@@ -6,13 +6,11 @@
 <ul>
     #foreach ( $tip in $tips )
     <br />
-    <form action="/tips/$tip.id" method="POST" id="$tip.id">
+    <form action="/tips/$tip.id/$tip.type" method="POST" id="$tip.id">
 
+        <p>Edit a ${tip.type}</p>
         <label for="title"> Title: </label>
         <input name="title" value="$tip.title" disabled="true" />
-        <br />
-        <label for="type"> Type: </label>
-        <input name="type" value="$tip.type" disabled="true" />
         <br />
         <label for="note"> Note: </label>
         <input name="note" value="$tip.note" disabled="true" />

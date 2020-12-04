@@ -78,12 +78,12 @@ public class Main {
     }
 
     private static void editTip() {
-        post("/tips/:id", (req, res) -> {
+        post("/tips/:id/:type", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
             model.put("template", "templates/index.html");
 
-            String type = req.queryParams("type");
             int id = Integer.parseInt(req.params(":id"));
+            String type = req.params(":type");
             Tip tip;
             switch (type) {
                 case "Book":
