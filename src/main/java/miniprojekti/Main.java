@@ -14,6 +14,7 @@ import miniprojekti.domain.PodcastTip;
 import miniprojekti.domain.ReadingTip;
 import miniprojekti.domain.Tip;
 import miniprojekti.domain.TipFactory;
+import miniprojekti.domain.Validation;
 import miniprojekti.domain.VideoTip;
 import spark.ModelAndView;
 import spark.Redirect;
@@ -30,8 +31,9 @@ import spark.template.velocity.VelocityTemplateEngine;
 // Main tulee toimimaan Controllerina
 public class Main {
 
-    private final static Logic appLogic = new Logic();
+    private final static Logic LOGIC = new Logic();
     private static final String LAYOUT = "templates/layout.html";
+    private final static Validation VALIDATOR = new Validation();
 
     public static void main(String[] args) {
         Spark.port(portSelection());
@@ -55,9 +57,9 @@ public class Main {
                 }
             } catch (Exception e) {
             }
-
+            
             model.put("template", "templates/index.html");
-            model.put("tips", appLogic.retrieveAllTipsByType(types));
+            model.put("tips", LOGIC.retrieveAllTipsByType(types));
             
             return new ModelAndView(model, LAYOUT);
         },new VelocityTemplateEngine());
@@ -70,7 +72,7 @@ public class Main {
             model.put("template", "templates/index.html");
             String s = req.params(":id");
             int id = Integer.parseInt(s);
-            appLogic.deleteTipByID(id);
+            LOGIC.deleteTipByID(id);
             model.put("deleted", "Tip deleted!");
             res.redirect("/");
             return new ModelAndView(model, LAYOUT);
@@ -89,29 +91,29 @@ public class Main {
                 case "Book":
                     tip = new BookTip(id, req.queryParams("title"), req.queryParams("note"), 0,
                             req.queryParams("author"), req.queryParams("isbn"), req.queryParams("url"));
-                    appLogic.updateTip(tip);
+                    LOGIC.updateTip(tip);
                     break;
                 case "Video":
                     tip = new VideoTip(id, req.queryParams("title"), req.queryParams("note"), 0,
                             req.queryParams("url"));
-                    appLogic.updateTip(tip);
+                    LOGIC.updateTip(tip);
                     break;
                 case "Podcast":
                     tip = new PodcastTip(id, req.queryParams("title"), req.queryParams("note"), 0,
                             req.queryParams("author"), req.queryParams("description"), req.queryParams("url"));
-                    appLogic.updateTip(tip);
+                    LOGIC.updateTip(tip);
                     break;
                 case "Blogpost":
                     tip = new BlogpostTip(id, req.queryParams("title"), req.queryParams("note"), 0,
                             req.queryParams("url"));
-                    appLogic.updateTip(tip);
+                    LOGIC.updateTip(tip);
                     break;
                 default:
                     break;
             }
 
             model.put("editedTip", "Tip updated!");
-            model.put("tips", appLogic.retrieveAllTips());
+            model.put("tips", LOGIC.retrieveAllTips());
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
     }
@@ -120,14 +122,26 @@ public class Main {
         post("/add/:type", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
 
+            String type = req.params("type");
+            
             Map<String, String> paramMap = getQueryParams(req);
-            paramMap.put("type", req.params("type"));
+            paramMap.put("type", type);
 
-            appLogic.saveNewTip(paramMap);
-
-            model.put("template", "templates/index.html");
-            model.put("tipAdded", "New tip added succesfully");
-            model.put("tips", appLogic.retrieveAllTips());
+            ArrayList<String> validationMessages = VALIDATOR.validate(paramMap);
+            
+            if (!validationMessages.isEmpty()) {
+                model.put("errors", validationMessages);
+                model.put("template", "templates/add.html");
+                model.put("type", type);
+                
+                System.out.println("montako erroria: " + validationMessages.size());
+            } else {
+                LOGIC.saveNewTip(paramMap);
+                
+                model.put("template", "templates/index.html");
+                model.put("tipAdded", "New tip added succesfully");
+                model.put("tips", LOGIC.retrieveAllTips());
+            }
 
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
@@ -138,8 +152,12 @@ public class Main {
         get("/tips", (req, res) -> {
             HashMap<String, Object> model = new HashMap<>();
 
-            model.put("tips", appLogic.retrieveAllTips());
+            model.put("tips", LOGIC.retrieveAllTips());
             model.put("template", "templates/tips.html");
+            
+            ArrayList<String> errors = new ArrayList<>();
+            errors.add("111111111111");
+            model.put("errors", errors);
 
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
@@ -150,7 +168,7 @@ public class Main {
             HashMap<String, Object> model = new HashMap<>();
 
             String id = req.params(":id");
-            model.put("tips", appLogic.retrieveTip(id));
+            model.put("tips", LOGIC.retrieveTip(id));
             model.put("template", "templates/tip.html");
 
             return new ModelAndView(model, LAYOUT);

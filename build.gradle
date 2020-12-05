@@ -35,6 +35,7 @@ dependencies {
     compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: '3.14.0'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.14.0'   
     compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.33.0'
+    compile 'commons-validator:commons-validator:1.7'
 }
 
 test {

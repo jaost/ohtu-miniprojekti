@@ -6,6 +6,17 @@
 </head>
 
 <body>
+    #if ($errors) 
+        #if ($errors.size() == 1)
+          <strong>Error:</strong>
+        #else 
+          <strong>Errors:</strong>
+        #end
+        #foreach ($error in $errors)
+          <p>$error</p>
+        #end
+    #end
+    
     #parse($template)
 </body>
 
