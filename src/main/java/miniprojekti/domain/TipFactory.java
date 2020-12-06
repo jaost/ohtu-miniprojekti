@@ -5,7 +5,7 @@ import java.util.Map;
 public class TipFactory {
     
     public static Tip createTip(Map<String, String> attr) {
-        switch (attr.get("type")) {
+        switch (attr.get("type").toLowerCase()) {
             case "book":
                 return BookTip.createBook(attr);
             case "blogpost":

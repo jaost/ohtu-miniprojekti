@@ -84,36 +84,53 @@ public class Main {
             HashMap<String, Object> model = new HashMap<>();
             model.put("template", "templates/index.html");
 
+            Map<String, String> paramMap = getQueryParams(req);
+            
             int id = Integer.parseInt(req.params(":id"));
+            
             String type = req.params(":type");
-            Tip tip;
-            switch (type) {
-                case "Book":
-                    tip = new BookTip(id, req.queryParams("title"), req.queryParams("note"), 0,
-                            req.queryParams("author"), req.queryParams("isbn"), req.queryParams("url"));
-                    LOGIC.updateTip(tip);
-                    break;
-                case "Video":
-                    tip = new VideoTip(id, req.queryParams("title"), req.queryParams("note"), 0,
-                            req.queryParams("url"));
-                    LOGIC.updateTip(tip);
-                    break;
-                case "Podcast":
-                    tip = new PodcastTip(id, req.queryParams("title"), req.queryParams("note"), 0,
-                            req.queryParams("author"), req.queryParams("description"), req.queryParams("url"));
-                    LOGIC.updateTip(tip);
-                    break;
-                case "Blogpost":
-                    tip = new BlogpostTip(id, req.queryParams("title"), req.queryParams("note"), 0,
-                            req.queryParams("url"));
-                    LOGIC.updateTip(tip);
-                    break;
-                default:
-                    break;
-            }
-
-            model.put("editedTip", "Tip updated!");
-            model.put("tips", LOGIC.retrieveAllTips());
+            paramMap.put("type", type);
+            paramMap.put("id", String.valueOf(id));
+            
+            ArrayList<String> validationMessages = VALIDATOR.validate(paramMap);
+            
+            if (!validationMessages.isEmpty()) {
+                model.put("template", "templates/tip.html");
+                
+                List<Map<String, String>> listForTip = new ArrayList<>();
+                listForTip.add(paramMap);
+                model.put("tips", listForTip);
+                
+                model.put("errors", validationMessages);
+            } else {
+                Tip tip;
+                switch (type) {
+                    case "Book":
+                        tip = new BookTip(id, req.queryParams("title"), req.queryParams("note"), 0,
+                                req.queryParams("author"), req.queryParams("isbn"), req.queryParams("url"));
+                        LOGIC.updateTip(tip);
+                        break;
+                    case "Video":
+                        tip = new VideoTip(id, req.queryParams("title"), req.queryParams("note"), 0,
+                                req.queryParams("url"));
+                        LOGIC.updateTip(tip);
+                        break;
+                    case "Podcast":
+                        tip = new PodcastTip(id, req.queryParams("title"), req.queryParams("note"), 0,
+                                req.queryParams("author"), req.queryParams("description"), req.queryParams("url"));
+                        LOGIC.updateTip(tip);
+                        break;
+                    case "Blogpost":
+                        tip = new BlogpostTip(id, req.queryParams("title"), req.queryParams("note"), 0,
+                                req.queryParams("url"));
+                        LOGIC.updateTip(tip);
+                        break;
+                    default:
+                        break;
+                }
+                model.put("editedTip", "Tip updated!");
+                model.put("tips", LOGIC.retrieveAllTips());
+            }     
             return new ModelAndView(model, LAYOUT);
         }, new VelocityTemplateEngine());
     }
@@ -133,8 +150,6 @@ public class Main {
                 model.put("errors", validationMessages);
                 model.put("template", "templates/add.html");
                 model.put("type", type);
-                
-                System.out.println("montako erroria: " + validationMessages.size());
             } else {
                 LOGIC.saveNewTip(paramMap);
                 

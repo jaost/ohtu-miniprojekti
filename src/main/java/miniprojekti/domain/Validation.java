@@ -20,7 +20,7 @@ public class Validation {
         validateTitle(params.get("title"));
         validateNote(params.get("note"));
         
-        switch (params.get("type")) {
+        switch (params.get("type").toLowerCase()) {
             case "book":
                 validateBook();
                 break;
