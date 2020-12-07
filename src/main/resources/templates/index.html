@@ -33,9 +33,10 @@
     <br/>
     <input type="submit" value="Show tips"/>
 </form>
+<div id="tips">
+  #foreach ( $tip in $tips )
+  <div>
     <ul>
-        #foreach ( $tip in $tips )
-          <br/>
           <li> Id: $tip.id</li>
           <li> Type: $tip.type</li>
           <li> Title : $tip.title</li>
@@ -74,5 +75,7 @@
           <form action="/tips/$tip.id" method="GET">
             <input type="submit" value="Open" /></form>
           <br/>
-        #end
     </ul>
+  </div>
+  #end
+</div>
