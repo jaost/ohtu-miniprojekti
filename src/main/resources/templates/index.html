@@ -39,20 +39,37 @@
           <li> Id: $tip.id</li>
           <li> Type: $tip.type</li>
           <li> Title : $tip.title</li>
-          <li> Note: $tip.note</li>
-          
+          #if($tip.note != "")
+            <li> Note: $tip.note</li>
+          #end
           #if ($tip.type == "Book")
-            <li> Author: $tip.author</li>
-            <li> ISBN: $tip.isbn</li>
-            <li> URL: $tip.url</li>
+            #if($tip.author != "")
+              <li> Author: $tip.author</li>
+            #end
+            #if($tip.isbn != "")
+              <li> ISBN: $tip.isbn</li>
+            #end  
+            #if($tip.url != "")
+            <li> URL:<a href="$tip.url">$tip.url</a></li>
+            #end
           #elseif ($tip.type == "Podcast")
-            <li> Author: $tip.author</li>
-            <li> Description: $tip.description</li>
-            <li> URL: $tip.url</li>
+            #if($tip.author != "")
+              <li> Author: $tip.author</li>
+            #end  
+            #if($tip.description != "")
+              <li> Description: $tip.description</li>
+            #end
+            #if($tip.url != "")
+            <li> URL:<a href="$tip.url">$tip.url</a></li>
+            #end
           #elseif ($tip.type == "Blogpost")
-            <li> URL: $tip.url</li>
+            #if($tip.url != "")
+            <li> URL:<a href="$tip.url">$tip.url</a></li>
+            #end
           #elseif ($tip.type == "Video")
-            <li> URL: $tip.url</li>
+            #if($tip.url != "")
+              <li> URL:<a href="$tip.url">$tip.url</a></li>
+            #end
           #end
           <form action="/tips/$tip.id" method="GET">
             <input type="submit" value="Open" /></form>
